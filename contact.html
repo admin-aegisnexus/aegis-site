@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Aegis-Nexus</title>
+    <style>
+        body { font-family: sans-serif; background: #0b0e14; color: #e0e0e0; padding: 40px; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; border: 1px solid #2d333b; padding: 30px; border-radius: 8px; background: #161b22; }
+        h1 { color: #58a6ff; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 4px; box-sizing: border-box; }
+        button { background: #238636; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        button:hover { background: #2ea043; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact the Bridge</h1>
+        <p>Inquiries regarding the Missouri Sentinel Pilot or general support.</p>
+        <form name="contact" method="POST" data-netlify="true">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Your Name" required />
+            
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Your @email.com" required />
+            
+            <label>Message</label>
+            <textarea name="message" rows="5" placeholder="How can Aegis help?" required></textarea>
+            
+            <button type="submit">Send to Aegis</button>
+        </form>
+    </div>
+</body>
+</html>

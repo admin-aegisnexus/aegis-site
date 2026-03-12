@@ -17,18 +17,20 @@
     <div class="container">
         <h1>Contact the Bridge</h1>
         <p>Inquiries regarding the Missouri Sentinel Pilot or general support.</p>
-        <form name="contact" method="POST" data-netlify="true">
+        <form name="contact" method="POST" data-netlify="true" action="/success">
+            <input type="hidden" name="form-name" value="contact" />
+
             <label>Name</label>
             <input type="text" name="name" placeholder="Your Name" required />
-            
+    
             <label>Email</label>
             <input type="email" name="email" placeholder="Your @email.com" required />
-            
+    
             <label>Message</label>
             <textarea name="message" rows="5" placeholder="How can Aegis help?" required></textarea>
-            
+    
             <button type="submit">Send to Aegis</button>
-        </form>
+        </form>                
     </div>
 </body>
 </html>

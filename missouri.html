@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missouri Pilot | Aegis-Nexus</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background: #0b0e14; color: #e0e0e0; padding: 40px; }
+        .dashboard { max-width: 700px; margin: 0 auto; border: 2px solid #2d333b; padding: 30px; border-radius: 12px; background: #161b22; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .status-pill { display: inline-block; padding: 5px 15px; border-radius: 20px; background: #238636; color: white; font-weight: bold; margin-bottom: 20px; }
+        .metric { border-bottom: 1px solid #30363d; padding: 15px 0; display: flex; justify-content: space-between; }
+        .metric-label { color: #8b949e; }
+        h1 { color: #58a6ff; margin-top: 0; }
+        .emergency-btn { display: block; text-align: center; background: #da3633; color: white; padding: 15px; text-decoration: none; border-radius: 6px; margin-top: 30px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="status-pill">● SHIELD ACTIVE</div>
+        <h1>Missouri Sentinel Node</h1>
+        <p>Real-time security status for the Aegis-Nexus Pilot Program.</p>
+        
+        <div class="metric">
+            <span class="metric-label">Assigned Hardware</span>
+            <span>Aegis Tablet v1 (tab.test2)</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">Local Brain (Titan)</span>
+            <span>CONNECTED (Mililani Bridge)</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">System Integrity</span>
+            <span style="color: #2ea043;">100% SECURE</span>
+        </div>
+        
+        <a href="/contact" class="emergency-btn">REQUEST COMMANDER INTERVENTION</a>
+    </div>
+</body>
+</html>

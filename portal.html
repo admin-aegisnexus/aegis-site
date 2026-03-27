@@ -102,6 +102,7 @@
         if (alerts.length > 0 && alerts[0].severity === 'CRITICAL') {
             statusCard.className = 'status-card status-red';
             statusText.innerText = `🚨 SENTINEL ALERT: ${alerts[0].threat_term.toUpperCase()}`;
+            document.getElementById('status-subtext').innerText = "Sentinel intercepted a high-risk phrase.";
         } else {
             statusCard.className = 'status-card status-green';
             statusText.innerText = 'SHIELD ACTIVE: ALL SYSTEMS NOMINAL';

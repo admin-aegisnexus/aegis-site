@@ -23,52 +23,83 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(139, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0); } }
     </style>
 </head>
-<body>
+<body onload="checkAccess()">
 
-<header>
-    <h1>GUARDIAN PORTAL</h1>
-    <p>SENTINEL TELEMETRY: MISSOURI PILOT</p>
-</header>
-
-<div class="container">
-    <div id="master-status" class="status-card status-green">
-        <h2 id="status-text">SHIELD ACTIVE: ALL SYSTEMS NOMINAL</h2>
-        <p id="status-subtext">No threats detected in the last 24 hours.</p>
+<div id="privacy-wall" style="display: flex; height: 100vh; align-items: center; justify-content: center; background: #0b0e14;">
+    <div style="text-align: center;">
+        <h2 style="color: var(--gold);">ENTER AUTHORIZATION KEY</h2>
+        <input type="password" id="passkey" style="padding: 10px; border-radius: 4px; border: 1px solid var(--gold); background: #000; color: #fff;">
+        <button onclick="authorize()" style="padding: 10px 20px; background: var(--gold); border: none; font-weight: bold; cursor: pointer;">LOGIN</button>
     </div>
+</div>
 
-    <h3>Recent Activity Logs</h3>
-    <div id="alert-log">
+<div id="main-content" style="display: none;">
+    <header>
+        <h1>GUARDIAN PORTAL</h1>
+        <p>SENTINEL TELEMETRY: MISSOURI PILOT</p>
+    </header>
+
+    <div class="container">
+        <div id="master-status" class="status-card status-green">
+            <h2 id="status-text">SHIELD ACTIVE: ALL SYSTEMS NOMINAL</h2>
+            <p id="status-subtext">No threats detected in the last 24 hours.</p>
         </div>
+        <h3>Recent Activity Logs</h3>
+        <div id="alert-log"></div>
+    </div>
 </div>
 
 <script>
-    // 🔑 Replace with your actual Supabase keys
-    const SUPABASE_URL = "YOUR_SUPABASE_URL";
-    const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 🔑 STEP 1: Replace these with your actual keys from image_036ebe.png!
+    const SUPABASE_URL = "https://ysdmklyjafgloxseywnr.supabase.co"; 
+    const SUPABASE_KEY = "PASTE_YOUR_ANON_KEY_HERE"; 
+    
+    // 🛡️ STEP 2: Set your portal password here
+    const GUARDIAN_PASS = "aegis2026"; 
+
+    const { createClient } = supabase;
+    const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function checkAccess() {
+        if (sessionStorage.getItem('aegis_auth') === 'true') {
+            showDashboard();
+        }
+    }
+
+    function authorize() {
+        const input = document.getElementById('passkey').value;
+        if (input === GUARDIAN_PASS) {
+            sessionStorage.setItem('aegis_auth', 'true');
+            showDashboard();
+        } else {
+            alert("Authorization Failed.");
+        }
+    }
+
+    function showDashboard() {
+        document.getElementById('privacy-wall').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        fetchLatestAlerts();
+    }
 
     async function fetchLatestAlerts() {
-        const { data, error } = await supabase
+        const { data, error } = await _supabase
             .from('sentinel_alerts')
             .select('*')
             .order('created_at', { ascending: false })
             .limit(5);
 
-        if (data && data.length > 0) {
-            updateUI(data);
-        }
+        if (error) console.error('Fetch Error:', error);
+        if (data) updateUI(data);
     }
 
     function updateUI(alerts) {
         const statusCard = document.getElementById('master-status');
         const statusText = document.getElementById('status-text');
         const logContainer = document.getElementById('alert-log');
-        
-        // Clear old logs
         logContainer.innerHTML = '';
 
-        // Check if the most recent alert is 'CRITICAL'
-        if (alerts[0].severity === 'CRITICAL') {
+        if (alerts.length > 0 && alerts[0].severity === 'CRITICAL') {
             statusCard.className = 'status-card status-red';
             statusText.innerText = `🚨 SENTINEL ALERT: ${alerts[0].threat_term.toUpperCase()}`;
         } else {
@@ -76,30 +107,18 @@
             statusText.innerText = 'SHIELD ACTIVE: ALL SYSTEMS NOMINAL';
         }
 
-        // Build the list
         alerts.forEach(alert => {
             const div = document.createElement('div');
             div.className = 'alert-item';
-            div.innerHTML = `
-                <span><strong>${alert.pilot_name}</strong>: ${alert.threat_term}</span>
-                <span class="severity-badge">${alert.severity}</span>
-            `;
+            div.innerHTML = `<span><strong>${alert.pilot_name}</strong>: ${alert.threat_term}</span><span class="severity-badge">${alert.severity}</span>`;
             logContainer.appendChild(div);
         });
     }
 
-    // 📡 Real-time Listener: Updates the page without refreshing
-    supabase
-        .channel('schema-db-changes')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sentinel_alerts' }, payload => {
-            console.log('New alert received!', payload);
-            fetchLatestAlerts(); // Re-fetch to update the UI
-        })
-        .subscribe();
-
-    // Initial load
-    fetchLatestAlerts();
+    // 📡 Real-time Listener
+    _supabase.channel('any').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sentinel_alerts' }, payload => {
+        fetchLatestAlerts();
+    }).subscribe();
 </script>
-
 </body>
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Portal | Aegis Nexus</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --navy: #001f3f; --gold: #D4AF37; --red: #8b0000; --green: #238636; --slate: #161b22; }
+        body { margin: 0; font-family: sans-serif; background-color: #0b0e14; color: #e0e0e0; }
+        header { background: var(--navy); color: var(--gold); padding: 1.5rem; text-align: center; border-bottom: 3px solid var(--gold); }
+        .container { max-width: 800px; margin: 2rem auto; padding: 1rem; }
+        
+        /* The Status Card */
+        .status-card { padding: 3rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; transition: all 0.5s ease; border: 2px solid transparent; }
+        .status-green { background: rgba(35, 134, 54, 0.1); border-color: var(--green); color: #7ee787; }
+        .status-red { background: rgba(139, 0, 0, 0.2); border-color: var(--red); color: #ff7b72; animation: pulse 2s infinite; }
+        
+        /* Alert List */
+        .alert-item { background: var(--slate); padding: 1rem; margin: 0.5rem 0; border-radius: 6px; border-left: 4px solid var(--gold); display: flex; justify-content: space-between; }
+        .severity-badge { background: var(--red); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(139, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>GUARDIAN PORTAL</h1>
+    <p>SENTINEL TELEMETRY: MISSOURI PILOT</p>
+</header>
+
+<div class="container">
+    <div id="master-status" class="status-card status-green">
+        <h2 id="status-text">SHIELD ACTIVE: ALL SYSTEMS NOMINAL</h2>
+        <p id="status-subtext">No threats detected in the last 24 hours.</p>
+    </div>
+
+    <h3>Recent Activity Logs</h3>
+    <div id="alert-log">
+        </div>
+</div>
+
+<script>
+    // 🔑 Replace with your actual Supabase keys
+    const SUPABASE_URL = "YOUR_SUPABASE_URL";
+    const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function fetchLatestAlerts() {
+        const { data, error } = await supabase
+            .from('sentinel_alerts')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(5);
+
+        if (data && data.length > 0) {
+            updateUI(data);
+        }
+    }
+
+    function updateUI(alerts) {
+        const statusCard = document.getElementById('master-status');
+        const statusText = document.getElementById('status-text');
+        const logContainer = document.getElementById('alert-log');
+        
+        // Clear old logs
+        logContainer.innerHTML = '';
+
+        // Check if the most recent alert is 'CRITICAL'
+        if (alerts[0].severity === 'CRITICAL') {
+            statusCard.className = 'status-card status-red';
+            statusText.innerText = `🚨 SENTINEL ALERT: ${alerts[0].threat_term.toUpperCase()}`;
+        } else {
+            statusCard.className = 'status-card status-green';
+            statusText.innerText = 'SHIELD ACTIVE: ALL SYSTEMS NOMINAL';
+        }
+
+        // Build the list
+        alerts.forEach(alert => {
+            const div = document.createElement('div');
+            div.className = 'alert-item';
+            div.innerHTML = `
+                <span><strong>${alert.pilot_name}</strong>: ${alert.threat_term}</span>
+                <span class="severity-badge">${alert.severity}</span>
+            `;
+            logContainer.appendChild(div);
+        });
+    }
+
+    // 📡 Real-time Listener: Updates the page without refreshing
+    supabase
+        .channel('schema-db-changes')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sentinel_alerts' }, payload => {
+            console.log('New alert received!', payload);
+            fetchLatestAlerts(); // Re-fetch to update the UI
+        })
+        .subscribe();
+
+    // Initial load
+    fetchLatestAlerts();
+</script>
+
+</body>
+</html>

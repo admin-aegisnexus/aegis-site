@@ -5,30 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing | AegisNexus</title>
     <style>
-        :root { --navy: #001f3f; --gold: #D4AF37; --slate: #f4f7f6; --text: #333; --dark-slate: #161b22; }
+        :root { --navy: #001f3f; --gold: #D4AF37; --slate: #f4f7f6; --text: #333; }
         body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); background-color: white; line-height: 1.6; }
         header { background: var(--navy); color: var(--gold); padding: 3rem 2rem; text-align: center; border-bottom: 5px solid var(--gold); }
-        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
         h1 { font-size: 2.5rem; letter-spacing: 4px; margin: 0; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
-        .card { border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center; transition: all 0.3s ease; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .card { border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center; transition: all 0.3s ease; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
         .card.featured { border-color: var(--gold); box-shadow: 0 4px 20px rgba(212,175,55,0.15); }
-        .card h3 { color: var(--navy); margin-top: 0; font-size: 1.5rem; }
-        .price { font-size: 1.8rem; font-weight: bold; color: var(--navy); margin: 1rem 0; }
-        .price span { font-size: 1rem; color: #666; font-weight: normal; }
+        .card h3 { color: var(--navy); margin-top: 0; font-size: 1.4rem; border-bottom: 2px solid var(--slate); padding-bottom: 10px; }
+        
+        .price-block { margin: 1.5rem 0; }
+        .price-setup { font-size: 1.1rem; font-weight: bold; color: #555; }
+        .price-monthly { font-size: 2rem; font-weight: bold; color: var(--navy); }
+        .price-monthly span { font-size: 1rem; color: #666; font-weight: normal; }
         
         .badge { background: var(--gold); color: var(--navy); padding: 3px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); }
-        .features { list-style: none; padding: 0; text-align: left; margin: 1.5rem 0; }
+        .features { list-style: none; padding: 0; text-align: left; margin: 1.5rem 0; font-size: 0.95rem; }
         .features li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
         .features li::before { content: "✓"; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
+        
+        .pilot-banner { background: var(--navy); color: white; padding: 2rem; border-radius: 10px; border: 2px solid var(--gold); margin-top: 3rem; text-align: center; }
+        .pilot-banner h3 { color: var(--gold); margin-top: 0; letter-spacing: 1px; }
         
         .faq { margin-top: 4rem; background: var(--slate); padding: 2rem; border-radius: 10px; }
         .faq h2 { color: var(--navy); text-align: center; margin-bottom: 1.5rem; }
         .faq-item { margin-bottom: 1.5rem; }
         .faq-item h4 { color: var(--navy); margin: 0 0 0.5rem 0; font-size: 1.1rem; }
         
-        .btn { display: block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 1.5rem; transition: all 0.3s ease; }
+        .btn { display: block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: auto; transition: all 0.3s ease; }
         .btn:hover { background: var(--gold); color: var(--navy); }
         footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; font-size: 0.9rem; margin-top: 4rem; }
         .back-link { color: var(--gold); text-decoration: none; font-weight: bold; }
@@ -43,35 +49,64 @@
 
 <div class="container">
     <div class="grid">
-        <div class="card featured">
-            <div class="badge">RECOMMENDED</div>
-            <h3>Aegis Secure Tablet</h3>
-            <div class="price">Hardware Cost + Sub<span> / month</span></div>
-            <p style="font-size: 0.9rem; color: #666;">Perfect for family-funded standalone setups. Pre-configured, managed hardware package.</p>
-            <ul class="features">
-                <li>Managed Tablet Hardware (Wi-Fi or LTE)</li>
-                <li>Sovereign Secure Network Filter</li>
-                <li>DailySpark Native Cognitive Suite</li>
-                <li>Dedicated Titan Core Compute Allocation</li>
-                <li>Sentinel Perimeter Protection</li>
-                <li>Zero-Cloud Privacy Configuration</li>
-            </ul>
-            <a href="contact.html" class="btn">INQUIRE FOR HARDWARE</a>
-        </div>
-
         <div class="card">
-            <h3>Sovereign BYOD</h3>
-            <div class="price">Compute Subscription<span> / month</span></div>
-            <p style="font-size: 0.9rem; color: #666;">For users bringing their own compatible tablet hardware into the secure ecosystem.</p>
+            <h3>BYOD Hardening</h3>
+            <div class="price-block">
+                <div class="price-setup">$99 Setup Fee</div>
+                <div class="price-monthly">$25<span> / month</span></div>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; min-height: 45px;">Professional hardware hardening and OS network optimization for your existing compatible assets.</p>
             <ul class="features">
-                <li>Secure App Installation Profile</li>
+                <li>Initial Secure Device Handshake</li>
                 <li>DailySpark Native Cognitive Suite</li>
-                <li>Titan Core Compute Allocation</li>
-                <li>Encrypted Gateway Configuration</li>
-                <li>Standard Support Channels</li>
+                <li>Sovereign Local Encrypted Gateway</li>
+                <li>Standard Support Window</li>
             </ul>
             <a href="contact.html" class="btn">INQUIRE FOR BYOD</a>
         </div>
+
+        <div class="card featured">
+            <div class="badge">POPULAR</div>
+            <h3>The Aegis Shield</h3>
+            <div class="price-block">
+                <div class="price-setup">$349 Setup Fee</div>
+                <div class="price-monthly">$25<span> / month</span></div>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; min-height: 45px;">Pre-hardened standalone hardware package. Complete out-of-the-box compatibility and privacy integration.</p>
+            <ul class="features">
+                <li>Pre-Configured Wi-Fi Tablet</li>
+                <li>Sovereign Secure Network Filter</li>
+                <li>DailySpark Native Cognitive Suite</li>
+                <li>Dedicated Titan Core Compute Access</li>
+                <li>Sentinel Perimeter Protection</li>
+                <li>White-Glove Deployment Readiness</li>
+            </ul>
+            <a href="contact.html" class="btn">SECURE DEPLOYMENT</a>
+        </div>
+
+        <div class="card">
+            <h3>Executive Package</h3>
+            <div class="price-block">
+                <div class="price-setup">$475 Setup Fee</div>
+                <div class="price-monthly">$50<span> / month</span></div>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; min-height: 45px;">High-tier cellular-hardened hardware designed for total off-grid sovereignty and zero infrastructure dependence.</p>
+            <ul class="features">
+                <li>Pre-Hardened Dedicated LTE Hardware</li>
+                <li>Unlimited Secure Mobile Data Included</li>
+                <li>Sovereign Secure Network Filter</li>
+                <li>DailySpark Native Cognitive Suite</li>
+                <li>Priority Titan Core Compute Path</li>
+                <li>Sentinel Perimeter Protection</li>
+            </ul>
+            <a href="contact.html" class="btn">REQUEST EXECUTIVE DEPLOYMENT</a>
+        </div>
+    </div>
+
+    <div class="pilot-banner">
+        <h3>Founding Pilot Program</h3>
+        <p style="margin: 0.5rem 0 1.5rem 0; color: #e0e0e0; font-size: 0.95rem;">Are you looking to establish an initial pilot footprint or support a local ecosystem? Early adopters generating critical impact data qualify for waived onboarding fees and specialized grandfathered rates.</p>
+        <a href="contact.html" class="btn" style="display: inline-block; padding: 0.6rem 2rem; background: var(--gold); color: var(--navy);">APPLY FOR PILOT ACCESS</a>
     </div>
 
     <div class="faq">
@@ -84,12 +119,12 @@
 
         <div class="faq-item">
             <h4>Can I add a companion cellphone to my profile?</h4>
-            <p>Absolutely. We offer a <strong>Companion Phone Add-on</strong>. This allows secure access profiles to extend to your personal smartphone for mobile compute and synchronization alongside your core tablet architecture.</p>
+            <p>Absolutely. We offer a <strong>Companion Phone Add-on</strong> layout. This allows secure access profiles to extend to your personal smartphone for mobile compute and verification synchronization alongside your core tablet architecture.</p>
         </div>
 
         <div class="faq-item">
-            <h4>Why do you prefer provisioned hardware?</h4>
-            <p>Our secure tablets are locked down at the system layer via MDM and custom web filters before delivery. Bring Your Own Device (BYOD) setups are supported but lack the unified, plug-and-play network isolation of our provisioned fleet.</p>
+            <h4>Why do you prefer provisioned hardware over BYOD?</h4>
+            <p>Our provisioned hardware ecosystems are completely hardened at the OS kernel and network layer before shipment. While Bring Your Own Device (BYOD) is supported, it lacks the immediate, plug-and-play perimeter insulation of a pre-built Aegis device.</p>
         </div>
     </div>
 </div>

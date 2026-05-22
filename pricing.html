@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | AegisNexus</title>
+    <style>
+        :root { --navy: #001f3f; --gold: #D4AF37; --slate: #f4f7f6; --text: #333; --dark-slate: #161b22; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); background-color: white; line-height: 1.6; }
+        header { background: var(--navy); color: var(--gold); padding: 3rem 2rem; text-align: center; border-bottom: 5px solid var(--gold); }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 2.5rem; letter-spacing: 4px; margin: 0; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
+        .card { border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center; transition: all 0.3s ease; position: relative; }
+        .card.featured { border-color: var(--gold); box-shadow: 0 4px 20px rgba(212,175,55,0.15); }
+        .card h3 { color: var(--navy); margin-top: 0; font-size: 1.5rem; }
+        .price { font-size: 1.8rem; font-weight: bold; color: var(--navy); margin: 1rem 0; }
+        .price span { font-size: 1rem; color: #666; font-weight: normal; }
+        
+        .badge { background: var(--gold); color: var(--navy); padding: 3px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); }
+        .features { list-style: none; padding: 0; text-align: left; margin: 1.5rem 0; }
+        .features li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
+        .features li::before { content: "✓"; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
+        
+        .faq { margin-top: 4rem; background: var(--slate); padding: 2rem; border-radius: 10px; }
+        .faq h2 { color: var(--navy); text-align: center; margin-bottom: 1.5rem; }
+        .faq-item { margin-bottom: 1.5rem; }
+        .faq-item h4 { color: var(--navy); margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+        
+        .btn { display: block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 1.5rem; transition: all 0.3s ease; }
+        .btn:hover { background: var(--gold); color: var(--navy); }
+        footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; font-size: 0.9rem; margin-top: 4rem; }
+        .back-link { color: var(--gold); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AEGIS NEXUS ARCHITECTURE</h1>
+    <p style="font-size: 1.1rem; letter-spacing: 2px; margin: 5px 0 0 0;">SECURE ACCESS TIERS</p>
+</header>
+
+<div class="container">
+    <div class="grid">
+        <div class="card featured">
+            <div class="badge">RECOMMENDED</div>
+            <h3>Aegis Secure Tablet</h3>
+            <div class="price">Hardware Cost + Sub<span> / month</span></div>
+            <p style="font-size: 0.9rem; color: #666;">Perfect for family-funded standalone setups. Pre-configured, managed hardware package.</p>
+            <ul class="features">
+                <li>Managed Tablet Hardware (Wi-Fi or LTE)</li>
+                <li>Sovereign Secure Network Filter</li>
+                <li>DailySpark Native Cognitive Suite</li>
+                <li>Dedicated Titan Core Compute Allocation</li>
+                <li>Sentinel Perimeter Protection</li>
+                <li>Zero-Cloud Privacy Configuration</li>
+            </ul>
+            <a href="contact.html" class="btn">INQUIRE FOR HARDWARE</a>
+        </div>
+
+        <div class="card">
+            <h3>Sovereign BYOD</h3>
+            <div class="price">Compute Subscription<span> / month</span></div>
+            <p style="font-size: 0.9rem; color: #666;">For users bringing their own compatible tablet hardware into the secure ecosystem.</p>
+            <ul class="features">
+                <li>Secure App Installation Profile</li>
+                <li>DailySpark Native Cognitive Suite</li>
+                <li>Titan Core Compute Allocation</li>
+                <li>Encrypted Gateway Configuration</li>
+                <li>Standard Support Channels</li>
+            </ul>
+            <a href="contact.html" class="btn">INQUIRE FOR BYOD</a>
+        </div>
+    </div>
+
+    <div class="faq">
+        <h2>Operational Guidelines</h2>
+        
+        <div class="faq-item">
+            <h4>Can a family member or caregiver fund the subscription?</h4>
+            <p>Yes. We specialize in family-funded infrastructure. An adult child or legal guardian can manage the billing registry entirely via direct invoice, while the end-user receives the secure, zero-tracking device.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Can I add a companion cellphone to my profile?</h4>
+            <p>Absolutely. We offer a <strong>Companion Phone Add-on</strong>. This allows secure access profiles to extend to your personal smartphone for mobile compute and synchronization alongside your core tablet architecture.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Why do you prefer provisioned hardware?</h4>
+            <p>Our secure tablets are locked down at the system layer via MDM and custom web filters before delivery. Bring Your Own Device (BYOD) setups are supported but lack the unified, plug-and-play network isolation of our provisioned fleet.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 AegisNexus.ai | <a href="index.html" class="back-link">Return to Home</a>
+</footer>
+
+</body>
+</html>

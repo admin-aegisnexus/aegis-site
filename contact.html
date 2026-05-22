@@ -11,12 +11,15 @@
         input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 4px; box-sizing: border-box; }
         button { background: #238636; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
         button:hover { background: #2ea043; }
+        .back-link { display: inline-block; margin-top: 20px; color: #58a6ff; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Contact the Bridge</h1>
-        <p>Inquiries regarding the Missouri Sentinel Pilot or general support.</p>
+        <p>Secure infrastructure inquiries, custom automation requests, or system support.</p>
+        
         <form name="contact" method="POST" data-netlify="true" action="/success">
             <input type="hidden" name="form-name" value="contact" />
 
@@ -30,7 +33,9 @@
             <textarea name="message" rows="5" placeholder="How can Aegis help?" required></textarea>
     
             <button type="submit">Send to Aegis</button>
-        </form>                
+        </form>   
+        
+        <a href="index.html" class="back-link">← Return to Home</a>
     </div>
 </body>
 </html>

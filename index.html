@@ -17,6 +17,11 @@
         .pillar h3 { color: var(--navy); border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
         footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; font-size: 0.9rem; }
         .tag { display: inline-block; background: var(--gold); color: var(--navy); padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        
+        /* New Call To Action Button Styling */
+        .cta-container { text-align: center; margin-top: 2rem; }
+        .cta-btn { display: inline-block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.8rem 2.5rem; font-size: 1.1rem; font-weight: bold; text-decoration: none; border-radius: 5px; transition: all 0.3s ease; letter-spacing: 1px; }
+        .cta-btn:hover { background: var(--gold); color: var(--navy); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -30,6 +35,10 @@
     <section class="mission">
         <h2>Our Mission</h2>
         <p>At AegisNexus, we believe the future of AI shouldn't come at the cost of personal privacy. We deploy localized, secure infrastructure to provide real-time support and cognitive assistance for those who need it most. No cloud. No tracking. Total sovereignty.</p>
+        
+        <div class="cta-container">
+            <a href="mailto:inquire@aegisnexus.ai?subject=Infrastructure%20Access%20Inquiry" class="cta-btn">REQUEST SECURE CONSULTATION</a>
+        </div>
     </section>
 
     <div class="pillar-grid">
@@ -48,9 +57,9 @@
     </div>
 
     <section class="pilot-section">
-        <span class="tag">ACTIVE PILOT: APRIL 2026</span>
-        <h2>The Missouri Pilot</h2>
-        <p>AegisNexus is currently conducting a cross-Pacific infrastructure pilot. Using an encrypted "Invisible Wire," we are delivering vocalized AI support from our Hawaii-based Titan Core to mobile tactical units in Missouri.</p>
+        <span class="tag" style="background: var(--navy); color: var(--gold); border: 1px solid var(--gold);">PROVEN USE CASE</span>
+        <h2>The Missouri Deployment</h2>
+        <p>AegisNexus successfully delivered a cross-Pacific infrastructure pipeline. Using an encrypted "Invisible Wire," we provided secure, vocalized AI support from our Hawaii-based Titan Core to mobile tactical units in Missouri.</p>
         <ul>
             <li><strong>4,000+ Miles:</strong> Encrypted global tunneling via private mesh networking.</li>
             <li><strong>Voice-First:</strong> Intuitive bimodal interface for non-technical users.</li>

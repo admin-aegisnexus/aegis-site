@@ -74,53 +74,6 @@
     <a href="contact.html" style="color: var(--gold); text-decoration: none; font-weight: bold; letter-spacing: 1px;">[ CONTACT US ]</a>
 </footer>
 
-    <div id="aegis-compliance-banner" style="
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #111111;
-    border-top: 2px solid #00E5FF; /* Electric Blue Accent */
-    color: #FFFFFF;
-    font-family: sans-serif;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 99999;
-    display: none;
-    flex-direction: column;
-    gap: 15px;
-">
-    <div style="max-width: 1200px; margin: 0 auto; width: 100%;">
-        <h3 style="margin-0 0 8px 0; color: #00E5FF; font-size: 16px; letter-spacing: 0.5px;">
-            🔒 PRIVACY & COMPLIANCE NOTICE
-        </h3>
-        
-        <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.5; color: #CCCCCC;">
-            We use essential cookies to optimize your platform experience and analyze secure traffic patterns. By clicking "Accept All," you consent to our standard use of site cookies.
-        </p>
-        
-        <p style="margin: 0; font-size: 11px; line-height: 1.4; color: #888888; border-left: 2px solid #333333; padding-left: 10px;">
-            <strong>Email Disclaimer:</strong> Communications originating from Aegis Nexus LLC networks are confidential and intended solely for the addressed recipient. Automated scanning, interception, or unauthorized distribution of these assets is strictly prohibited by internal data security frameworks.
-        </p>
-    </div>
-    
-    <div style="max-width: 1200px; margin: 0 auto; width: 100%; text-align: right;">
-        <button id="accept-aegis-cookies" style="
-            background-color: #00E5FF;
-            color: #000000;
-            border: none;
-            padding: 8px 24px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s;
-        " onmouseover="this.style.backgroundColor='#00B2CC'" onmouseout="this.style.backgroundColor='#00E5FF'">
-            Accept All
-        </button>
-    </div>
-</div>
-
 <div id="aegis-compliance-overlay" style="
     position: fixed;
     top: 0;
@@ -137,7 +90,7 @@
 ">
     <div style="
         background-color: #111111;
-        border: 2px solid #00E5FF; /* Electric Blue */
+        border: 2px solid #00E5FF; /* Electric Blue Accent */
         border-radius: 8px;
         max-width: 550px;
         width: 100%;
@@ -160,7 +113,21 @@
             <strong>Email Disclaimer:</strong> Communications originating from Aegis Nexus LLC networks are confidential and intended solely for the addressed recipient. Automated scanning, interception, or unauthorized distribution of these assets is strictly prohibited by internal data security frameworks.
         </p>
         
-        <div style="text-align: right; margin-top: 5px;">
+        <div style="text-align: right; margin-top: 5px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button id="accept-essential-cookies" style="
+                background-color: transparent;
+                color: #888888;
+                border: 1px solid #333333;
+                padding: 10px 20px;
+                font-size: 13px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: all 0.2s;
+                font-family: sans-serif;
+            " onmouseover="this.style.color='#FFFFFF'; this.style.borderColor='#888888'" onmouseout="this.style.color='#888888'; this.style.borderColor='#333333'">
+                Essential Only
+            </button>
             <button id="accept-aegis-cookies" style="
                 background-color: #00E5FF;
                 color: #000000;
@@ -182,18 +149,25 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var overlay = document.getElementById("aegis-compliance-overlay");
-        var button = document.getElementById("accept-aegis-cookies");
 
-        // Show as a flex container if not previously accepted
+        // Show modal if choice isn't saved in this browser yet
         if (!localStorage.getItem("aegis_cookies_accepted")) {
             overlay.style.display = "flex";
         }
 
-        // Hide overlay and save state
-        button.addEventListener("click", function () {
-            localStorage.setItem("aegis_cookies_accepted", "true");
+        // Logic for Essential Only selection
+        document.getElementById("accept-essential-cookies").addEventListener("click", function () {
+            localStorage.setItem("aegis_cookies_accepted", "essential_only");
+            overlay.style.display = "none";
+        });
+
+        // Logic for Accept All selection
+        document.getElementById("accept-aegis-cookies").addEventListener("click", function () {
+            localStorage.setItem("aegis_cookies_accepted", "all");
             overlay.style.display = "none";
         });
     });
 </script>
+
+</body>
 </html>

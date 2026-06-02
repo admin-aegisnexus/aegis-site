@@ -72,6 +72,7 @@
 <footer style="text-align: center; padding: 2rem; background: var(--navy); color: #fff; font-size: 0.9rem;">
     &copy; 2026 AegisNexus.ai | Handcrafted for the Founder and the Pilot.<br><br>
     <a href="contact.html" style="color: var(--gold); text-decoration: none; font-weight: bold; letter-spacing: 1px;">[ CONTACT US ]</a>
+    <a href="disclaimer.html" style="color: var(--gold); text-decoration: none; font-weight: bold; letter-spacing: 1px; margin-left: 15px;">[ LEGAL DISCLAIMER ]</a>
 </footer>
 
 <div id="aegis-compliance-overlay" style="
@@ -106,7 +107,7 @@
         </h3>
         
         <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #CCCCCC; font-family: sans-serif;">
-            We use essential cookies to optimize your platform experience and analyze secure traffic patterns. By clicking "Accept All," you consent to our standard use of site cookies.
+            We use essential cookies to optimize your platform experience and analyze secure traffic patterns. By clicking "Accept All," you consent to our standard use of site cookies and agree to our bound <a href="disclaimer.html" style="color: #00E5FF; text-decoration: underline; font-weight: bold;">Legal Disclaimer</a>.
         </p>
         
         <p style="margin: 0; font-size: 11px; line-height: 1.4; color: #888888; border-left: 2px solid #333333; padding-left: 10px; font-family: sans-serif;">
@@ -150,18 +151,15 @@
     document.addEventListener("DOMContentLoaded", function () {
         var overlay = document.getElementById("aegis-compliance-overlay");
 
-        // Show modal if choice isn't saved in this browser yet
         if (!localStorage.getItem("aegis_cookies_accepted")) {
             overlay.style.display = "flex";
         }
 
-        // Logic for Essential Only selection
         document.getElementById("accept-essential-cookies").addEventListener("click", function () {
             localStorage.setItem("aegis_cookies_accepted", "essential_only");
             overlay.style.display = "none";
         });
 
-        // Logic for Accept All selection
         document.getElementById("accept-aegis-cookies").addEventListener("click", function () {
             localStorage.setItem("aegis_cookies_accepted", "all");
             overlay.style.display = "none";

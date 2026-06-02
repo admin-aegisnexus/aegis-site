@@ -37,5 +37,106 @@
         
         <a href="index.html" class="back-link">← Return to Home</a>
     </div>
+
+<!-- Aegis Nexus Compliance Modal Backdrop -->
+<div id="aegis-compliance-overlay" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* Dims the rest of the site */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    padding: 20px;
+    box-sizing: border-box;
+">
+    <!-- Centered Content Box -->
+    <div style="
+        background-color: #111111;
+        border: 2px solid #00E5FF; /* Electric Blue Accent */
+        border-radius: 8px;
+        max-width: 550px;
+        width: 100%;
+        padding: 25px;
+        box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    ">
+        <h3 style="margin: 0; color: #00E5FF; font-size: 18px; letter-spacing: 0.5px; font-family: sans-serif;">
+            🔒 PRIVACY & COMPLIANCE NOTICE
+        </h3>
+        
+        <!-- Cookie Notice -->
+        <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #CCCCCC; font-family: sans-serif;">
+            We use essential cookies to optimize your platform experience and analyze secure traffic patterns. By clicking "Accept All," you consent to our standard use of site cookies.
+        </p>
+        
+        <!-- Email Disclaimer -->
+        <p style="margin: 0; font-size: 11px; line-height: 1.4; color: #888888; border-left: 2px solid #333333; padding-left: 10px; font-family: sans-serif;">
+            <strong>Email Disclaimer:</strong> Communications originating from Aegis Nexus LLC networks are confidential and intended solely for the addressed recipient. Automated scanning, interception, or unauthorized distribution of these assets is strictly prohibited by internal data security frameworks.
+        </p>
+        
+        <!-- Action Buttons -->
+        <div style="text-align: right; margin-top: 5px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button id="accept-essential-cookies" style="
+                background-color: transparent;
+                color: #888888;
+                border: 1px solid #333333;
+                padding: 10px 20px;
+                font-size: 13px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: all 0.2s;
+                font-family: sans-serif;
+            " onmouseover="this.style.color='#FFFFFF'; this.style.borderColor='#888888'" onmouseout="this.style.color='#888888'; this.style.borderColor='#333333'">
+                Essential Only
+            </button>
+            <button id="accept-aegis-cookies" style="
+                background-color: #00E5FF;
+                color: #000000;
+                border: none;
+                padding: 10px 28px;
+                font-size: 13px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: background 0.2s;
+                font-family: sans-serif;
+            " onmouseover="this.style.backgroundColor='#00B2CC'" onmouseout="this.style.backgroundColor='#00E5FF'">
+                Accept All
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var overlay = document.getElementById("aegis-compliance-overlay");
+
+        // Show modal if choice isn't saved in this browser yet
+        if (!localStorage.getItem("aegis_cookies_accepted")) {
+            overlay.style.display = "flex";
+        }
+
+        // Logic for Essential Only selection
+        document.getElementById("accept-essential-cookies").addEventListener("click", function () {
+            localStorage.setItem("aegis_cookies_accepted", "essential_only");
+            overlay.style.display = "none";
+        });
+
+        // Logic for Accept All selection
+        document.getElementById("accept-aegis-cookies").addEventListener("click", function () {
+            localStorage.setItem("aegis_cookies_accepted", "all");
+            overlay.style.display = "none";
+        });
+    });
+</script>
+
 </body>
 </html>

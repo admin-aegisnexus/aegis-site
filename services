@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | AegisNexus</title>
+    <style>
+        :root { --navy: #001f3f; --gold: #D4AF37; --slate: #f4f7f6; --text: #333; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); background-color: white; line-height: 1.6; }
+        header { background: var(--navy); color: var(--gold); padding: 3rem 2rem; text-align: center; border-bottom: 5px solid var(--gold); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 2.5rem; letter-spacing: 4px; margin: 0; }
+        
+        /* Service Definitions Section */
+        .definitions { margin-bottom: 4rem; }
+        .def-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .def-item h3 { color: var(--navy); border-bottom: 2px solid var(--gold); padding-bottom: 5px; }
+
+        /* Table Styling */
+        .service-table { width: 100%; border-collapse: collapse; margin: 3rem 0; font-size: 0.95rem; }
+        .service-table th, .service-table td { padding: 15px; border: 1px solid #ddd; text-align: center; }
+        .service-table th { background-color: var(--navy); color: var(--gold); }
+        .service-table tr:nth-child(even) { background-color: var(--slate); }
+
+        /* Existing Styles kept for Pricing Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .card { border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center; display: flex; flex-direction: column; }
+        .card.featured { border-color: var(--gold); }
+        .btn { display: block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: auto; }
+        .btn:hover { background: var(--gold); color: var(--navy); }
+        footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AEGIS NEXUS SERVICES</h1>
+</header>
+
+<div class="container">
+
+    <!-- New Definitions Section -->
+    <div class="definitions">
+        <h2>What We Provide</h2>
+        <div class="def-grid">
+            <div class="def-item">
+                <h3>Aegis Titan</h3>
+                <p>A private, local AI engine that processes information within your private infrastructure. Titan assists in daily tasks while ensuring your data remains under your control and off the cloud.</p>
+            </div>
+            <div class="def-item">
+                <h3>Sentinel</h3>
+                <p>Protective oversight for managed Aegis devices. Sentinel monitors system health and connectivity, acting as a safeguard against digital threats while respecting user privacy.</p>
+            </div>
+            <div class="def-item">
+                <h3>DailySpark</h3>
+                <p>A guided interface for your daily routine. DailySpark helps users manage their day through secure modules designed to promote digital safety and cognitive engagement.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Matrix Table -->
+    <h2>Device Compatibility</h2>
+    <table class="service-table">
+        <thead>
+            <tr>
+                <th>Capability</th>
+                <th>Aegis-Supplied Tablet</th>
+                <th>BYOD Tablet</th>
+                <th>BYOD Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DailySpark App</td>
+                <td>Included</td>
+                <td>Included</td>
+                <td>Included</td>
+            </tr>
+            <tr>
+                <td>Aegis Titan (Chat)</td>
+                <td>Included</td>
+                <td>Included</td>
+                <td>Included</td>
+            </tr>
+            <tr>
+                <td>Sentinel (Monitoring)</td>
+                <td>Full</td>
+                <td>Work Profile Only</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Security Hardening</td>
+                <td>Managed</td>
+                <td>Policy-Based</td>
+                <td>Guidance Only</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pricing Section (Your original content) -->
+    <div class="grid">
+        <!-- Add your card divs here as they were in your original file -->
+    </div>
+
+</div>
+
+<footer>
+    &copy; 2026 AegisNexus.ai
+</footer>
+
+</body>
+</html>

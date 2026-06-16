@@ -22,13 +22,16 @@
         .service-table th { background-color: var(--navy); color: var(--gold); }
         .service-table tr:nth-child(even) { background-color: var(--slate); }
 
-        /* Existing Styles kept for Pricing Grid */
+        /* Pricing Section */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
         .card { border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center; display: flex; flex-direction: column; }
         .card.featured { border-color: var(--gold); }
         .btn { display: block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: auto; }
         .btn:hover { background: var(--gold); color: var(--navy); }
+        
+        /* Footer Styling */
         footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; margin-top: 4rem; }
+        .back-link { color: var(--gold); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -39,7 +42,7 @@
 
 <div class="container">
 
-    <!-- New Definitions Section -->
+    <!-- Definitions Section -->
     <div class="definitions">
         <h2>What We Provide</h2>
         <div class="def-grid">
@@ -96,16 +99,10 @@
             </tr>
         </tbody>
     </table>
-
-    <!-- Pricing Section (Your original content) -->
-    <div class="grid">
-        <!-- Add your card divs here as they were in your original file -->
-    </div>
-
 </div>
 
 <footer>
-    &copy; 2026 AegisNexus.ai
+    &copy; 2026 AegisNexus.ai | <a href="index.html" class="back-link">Return to Home</a>
 </footer>
 
 </body>

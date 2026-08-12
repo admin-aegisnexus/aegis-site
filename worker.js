@@ -19,6 +19,26 @@ export default {
     const path = url.pathname;
 
     try {
+      // 0. Root / Enrollment Landing Page
+      if (path === "/" || path === "") {
+        const hardwareId = url.searchParams.get("hardware_id") || "unknown_device";
+        const htmlContent = `
+          <html>
+          <head><title>Aegis Nexus Enrollment</title></head>
+          <body style="background:#001f3f; color:white; font-family:sans-serif; text-align:center; padding-top:40px;">
+            <h2>🛡️ AEGIS NEXUS PUBLIC ENROLLMENT</h2>
+            <p>Hardware ID: ${hardwareId}</p>
+            <form action="https://api.aegisnexus.ai/api/register_pilot" method="POST" style="margin-top:20px;">
+              <input type="hidden" name="hardwareId" value="${hardwareId}" />
+              <input type="text" name="email" placeholder="Enter Tester Email" style="padding:10px; width:280px; display:block; margin:10px auto;" required /><br/>
+              <input type="text" name="nickname" placeholder="Enter Pilot Callsign" style="padding:10px; width:280px; display:block; margin:10px auto;" required /><br/>
+              <button type="submit" style="background:#FFD700; color:#001f3f; padding:12px 24px; font-weight:bold; border:none; border-radius:5px;">ENROLL DEVICE</button>
+            </form>
+          </body>
+          </html>
+        `;
+        return new Response(htmlContent, { headers: { "Content-Type": "text/html; charset=utf-8" }, status: 200 });
+      }
       // 1. Health / Status Endpoint
       if (path === "/v1/health" || path === "/status") {
         return new Response(
@@ -123,6 +143,34 @@ export default {
 
         await env.AEGIS_CURRICULUM_KV.put(profileKey, JSON.stringify(profile));
         return new Response(JSON.stringify({ status: "success" }), { headers: CORS_HEADERS, status: 200 });
+      }
+      
+      // 7. Device Identity Lookup Endpoint: /api/device_identity/:hardwareId
+      if (path.startsWith("/api/device_identity/")) {
+        const hardwareId = path.split("/")[3];
+        
+        // List all stored profiles from KV to check authorized devices
+        // (Note: In production scale, this maps cleanly against an index key, but works natively for testing)
+        let listResult = await env.AEGIS_CURRICULUM_KV.list({ prefix: "profile_" });
+        
+        for (let key of listResult.keys) {
+          let profileRaw = await env.AEGIS_CURRICULUM_KV.get(key.name);
+          if (profileRaw) {
+            let profile = JSON.parse(profileRaw);
+            let devices = profile.authorized_devices || [profile.hardware_id];
+            if (devices.includes(hardwareId)) {
+              return new Response(
+                JSON.stringify({ email: profile.email, nickname: profile.nickname }),
+                { headers: CORS_HEADERS, status: 200 }
+              );
+            }
+          }
+        }
+
+        return new Response(
+          JSON.stringify({ error: "Device unknown" }),
+          { headers: CORS_HEADERS, status: 404 }
+        );
       }
 
       // Fallback for unknown routes

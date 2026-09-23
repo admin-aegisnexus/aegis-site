@@ -20,20 +20,53 @@
         <h1>Contact the Bridge</h1>
         <p>Secure infrastructure inquiries, custom automation requests, or system support.</p>
         
-        <form name="contact" method="POST" data-netlify="true" action="/success">
+        <form name="contact" method="POST" data-netlify="true" action="/success" id="contact-form">
             <input type="hidden" name="form-name" value="contact" />
 
             <label>Name</label>
-            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="text" name="name" id="name-input" placeholder="Your Name" required />
     
             <label>Email</label>
             <input type="email" name="email" placeholder="Your @email.com" required />
     
             <label>Message</label>
-            <textarea name="message" rows="5" placeholder="How can Aegis help?" required></textarea>
+            <textarea name="message" id="message-input" rows="5" placeholder="How can Aegis help?" required></textarea>
     
-            <button type="submit">Send to Aegis</button>
-        </form>   
+            <button type="submit" id="submit-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send to Aegis</button>
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const nameInput = document.getElementById("name-input");
+                const emailInput = document.getElementById("email-input");
+                const messageInput = document.getElementById("message-input");
+                const submitBtn = document.getElementById("submit-btn");
+
+                function validateEmail(email) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                }
+
+                function checkFormValidity() {
+                    const isNameValid = nameInput.value.trim().length > 0;
+                    const isEmailValid = validateEmail(emailInput.value.trim());
+                    const isMessageValid = messageInput.value.trim().length > 0;
+
+                    if (isNameValid && isEmailValid && isMessageValid) {
+                        submitBtn.removeAttribute("disabled");
+                        submitBtn.style.opacity = "1";
+                        submitBtn.style.cursor = "pointer";
+                    } else {
+                        submitBtn.setAttribute("disabled", "true");
+                        submitBtn.style.opacity = "0.5";
+                        submitBtn.style.cursor = "not-allowed";
+                    }
+                }
+
+                nameInput.addEventListener("input", checkFormValidity);
+                emailInput.addEventListener("input", checkFormValidity);
+                messageInput.addEventListener("input", checkFormValidity);
+            });
+        </script>
         
         <a href="index.html" class="back-link">← Return to Home</a>
     </div>

@@ -2,14 +2,15 @@
   "tester_id": "u_alpha_002",
   "nickname": "Worm",
   "tier": "FLEET",
-  "guardian_status": "TITAN_ACTIVE",
+  "guardian_status": "PILOT_LINKED",
+  "status_subtext": "Curriculum telemetry active (Sentinel daemon pending)",
   "last_active": "2026-10-06 15:53:05",
   "completed_days": 150,
   "current_curriculum_day": 151,
   "modules_completed_today": 5,
   "vitals": {
     "battery": "76",
-    "signal": "TITAN_ACTIVE"
+    "signal": "LINK_ACTIVE"
   },
   "streak_count": 12,
   "security_iq": {
@@ -23,11 +24,11 @@
   },
   "blocked_threats": [
     {
-      "id": "thr_001",
-      "type": "email",
-      "title": "Blocked phishing email claiming to be from bank",
-      "timestamp": "2 hours ago",
-      "status": "Blocked"
+      "id": "staged_001",
+      "type": "gated_preview",
+      "title": "[GATED: SENTINEL_TELEMETRY_PENDING] Inbound threat filter stream",
+      "timestamp": "Awaiting Daemon",
+      "status": "NOT_MONITORED"
     },
     {
       "id": "thr_002",
@@ -46,11 +47,11 @@
   ],
   "guided_interventions": [
     {
-      "id": "int_001",
-      "category": "Email Alert",
-      "detail": "Successfully identified phishing email from fake Amazon",
-      "timestamp": "3 hours ago",
-      "outcome": "Success"
+      "id": "staged_int_001",
+      "category": "Curriculum Sync",
+      "detail": "[STAGED] Behavioral intervention hook awaiting Sentinel L3 engine",
+      "timestamp": "Standby",
+      "outcome": "Pending"
     },
     {
       "id": "int_002",
@@ -73,11 +74,11 @@
   },
   "app_approval_queue": [
     {
-      "package_name": "com.solitaire.deluxe",
-      "app_name": "Solitaire Deluxe",
-      "category": "Games",
-      "requested_at": "10 mins ago",
-      "risk_level": "LOW_RISK"
+      "package_name": "com.aegis.placeholder",
+      "app_name": "[STAGED] MDM Package Queue",
+      "category": "System Hook",
+      "requested_at": "Queue Inactive",
+      "risk_level": "GATED"
     },
     {
       "package_name": "com.videochat.pro",

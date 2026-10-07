@@ -27,8 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const statusEl = document.getElementById('val-guardian-status');
-      if (statusEl && (data.vitals?.signal || data.guardian_status)) {
-        statusEl.innerText = data.vitals?.signal || data.guardian_status;
+      if (statusEl && data.guardian_status) {
+        statusEl.innerText = data.guardian_status;
+      }
+
+      const statusSubEl = document.querySelector('.card-status .status-subtext');
+      if (statusSubEl && data.status_subtext) {
+        statusSubEl.innerText = data.status_subtext;
       }
 
       const lastActiveEl = document.getElementById('val-last-active');

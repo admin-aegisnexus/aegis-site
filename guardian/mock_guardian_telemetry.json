@@ -1,11 +1,17 @@
 {
-  "pilot_token_id": "plt_fleet_dad_01",
-  "callsign": "Dad",
+  "tester_id": "u_alpha_002",
+  "nickname": "Worm",
   "tier": "FLEET",
-  "guardian_status": "ACTIVE",
-  "last_heartbeat_at": "2026-10-06T13:20:00-10:00",
+  "guardian_status": "TITAN_ACTIVE",
+  "last_active": "2026-10-06 15:53:05",
+  "completed_days": 150,
+  "current_curriculum_day": 151,
+  "modules_completed_today": 5,
+  "vitals": {
+    "battery": "76",
+    "signal": "TITAN_ACTIVE"
+  },
   "streak_count": 12,
-  "completed_modules_count": 28,
   "security_iq": {
     "score": 94,
     "delta_week": "+8 pts this week"

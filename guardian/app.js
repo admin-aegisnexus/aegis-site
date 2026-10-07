@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
 
       const callsignEl = document.getElementById('val-pilot-callsign');
-      if (callsignEl && data.callsign) {
-        callsignEl.innerText = data.callsign;
+      if (callsignEl && (data.nickname || data.callsign)) {
+        callsignEl.innerText = data.nickname || data.callsign;
       }
 
       const streakEl = document.getElementById('val-streak-count');
@@ -17,13 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const completedEl = document.getElementById('val-completed-modules');
-      if (completedEl && data.completed_modules_count !== undefined) {
-        completedEl.innerText = `${data.completed_modules_count} modules completed`;
+      if (completedEl && (data.completed_days !== undefined || data.completed_modules_count !== undefined)) {
+        completedEl.innerText = `${data.completed_days ?? data.completed_modules_count} days completed`;
       }
 
       const iqEl = document.getElementById('val-security-iq');
       if (iqEl && data.security_iq?.score !== undefined) {
         iqEl.innerText = data.security_iq.score;
+      }
+
+      const statusEl = document.getElementById('val-guardian-status');
+      if (statusEl && (data.vitals?.signal || data.guardian_status)) {
+        statusEl.innerText = data.vitals?.signal || data.guardian_status;
+      }
+
+      const lastActiveEl = document.getElementById('val-last-active');
+      if (lastActiveEl && data.last_active) {
+        lastActiveEl.innerText = `🕒 Last active: ${data.last_active}`;
       }
     } catch (err) {
       console.warn('Telemetry load failed, retaining static layout fallback:', err);

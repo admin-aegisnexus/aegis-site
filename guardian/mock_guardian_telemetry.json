@@ -1,0 +1,84 @@
+{
+  "pilot_token_id": "plt_fleet_dad_01",
+  "callsign": "Dad",
+  "tier": "FLEET",
+  "guardian_status": "ACTIVE",
+  "last_heartbeat_at": "2026-10-06T13:20:00-10:00",
+  "streak_count": 12,
+  "completed_modules_count": 28,
+  "security_iq": {
+    "score": 94,
+    "delta_week": "+8 pts this week"
+  },
+  "today_progress": {
+    "completed": 3,
+    "total": 5,
+    "modules": ["quiz", "puzzle", "sentry"]
+  },
+  "blocked_threats": [
+    {
+      "id": "thr_001",
+      "type": "email",
+      "title": "Blocked phishing email claiming to be from bank",
+      "timestamp": "2 hours ago",
+      "status": "Blocked"
+    },
+    {
+      "id": "thr_002",
+      "type": "phone",
+      "title": "Flagged suspicious caller ID from fake tech support",
+      "timestamp": "1 day ago",
+      "status": "Blocked"
+    },
+    {
+      "id": "thr_003",
+      "type": "headline",
+      "title": "Warned about emotional headline with power words",
+      "timestamp": "2 days ago",
+      "status": "Warned"
+    }
+  ],
+  "guided_interventions": [
+    {
+      "id": "int_001",
+      "category": "Email Alert",
+      "detail": "Successfully identified phishing email from fake Amazon",
+      "timestamp": "3 hours ago",
+      "outcome": "Success"
+    },
+    {
+      "id": "int_002",
+      "category": "Emotional Loading",
+      "detail": "Recognized manipulative language in news headline",
+      "timestamp": "Yesterday",
+      "outcome": "Success"
+    },
+    {
+      "id": "int_003",
+      "category": "Source Check",
+      "detail": "Spotted suspicious URL before clicking",
+      "timestamp": "2 days ago",
+      "outcome": "Success"
+    }
+  ],
+  "content_sensitivity": {
+    "politics": 7,
+    "religion": 8
+  },
+  "app_approval_queue": [
+    {
+      "package_name": "com.solitaire.deluxe",
+      "app_name": "Solitaire Deluxe",
+      "category": "Games",
+      "requested_at": "10 mins ago",
+      "risk_level": "LOW_RISK"
+    },
+    {
+      "package_name": "com.videochat.pro",
+      "app_name": "Video Chat Pro",
+      "category": "Communication",
+      "requested_at": "1 hour ago",
+      "risk_level": "MEDIUM_RISK"
+    }
+  ]
+}

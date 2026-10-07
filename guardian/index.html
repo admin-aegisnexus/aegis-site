@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caregiver Portal - Aegis Guardian Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Top Header -->
+    <header class="top-nav">
+      <div class="brand-block">
+        <div class="shield-icon">🛡️</div>
+        <div>
+          <h1>Caregiver Portal</h1>
+          <p class="subtitle">Aegis Guardian Dashboard</p>
+        </div>
+      </div>
+      <button class="exit-btn">← Exit</button>
+    </header>
+
+    <!-- Row 1: Key Metric Cards -->
+    <section class="metrics-grid">
+      <!-- Security IQ Card -->
+      <div class="card card-iq">
+        <div class="card-header-split">
+          <span class="card-label">Security IQ</span>
+          <span class="card-icon gold-text">🧠</span>
+        </div>
+        <div class="metric-value-wrap">
+          <span class="metric-huge gold-text" id="val-security-iq">94</span>
+          <span class="metric-denom">/100</span>
+        </div>
+        <p class="trend-text">↗ +8 pts this week</p>
+      </div>
+
+      <!-- Guardian Status Card -->
+      <div class="card card-status">
+        <div class="card-header-split">
+          <span class="card-label">Guardian Status</span>
+          <span class="card-icon">🛡️</span>
+        </div>
+        <div class="status-indicator-wrap">
+          <span class="status-dot"></span>
+          <span class="status-text" id="val-guardian-status">Active</span>
+        </div>
+        <p class="status-subtext">Protecting in real-time</p>
+      </div>
+
+      <!-- Pilot Vitality Card -->
+      <div class="card card-pilot">
+        <div class="card-header-split">
+          <span class="card-label">Last Active</span>
+          <span class="card-icon gold-text">📈</span>
+        </div>
+        <h2 class="pilot-callsign" id="val-pilot-callsign">Dad</h2>
+        <p class="timestamp-subtext" id="val-last-active">🕒 15 mins ago</p>
+        <p class="streak-line"><strong class="gold-text" id="val-streak-count">12 day streak</strong> • <span id="val-completed-modules">28 modules completed</span></p>
+      </div>
+    </section>
+
+    <!-- Row 2: Blocked Threats & Guided Interventions -->
+    <section class="feeds-grid">
+      <!-- Blocked Threats Column -->
+      <div class="card feed-card">
+        <div class="feed-header">
+          <div class="feed-title">
+            <span class="feed-icon danger-text">⚠️</span>
+            <h3>Blocked Threats</h3>
+          </div>
+          <span class="badge badge-danger" id="val-blocked-badge">2 this week</span>
+        </div>
+        <div class="feed-list" id="list-blocked-threats">
+          <div class="feed-item item-threat">
+            <div class="item-icon-box">✉️</div>
+            <div class="item-content">
+              <h4>Blocked phishing email claiming to be from bank</h4>
+              <p class="meta-row"><span>🕒 2 hours ago</span> <span class="action-tag">🚫 Blocked</span></p>
+            </div>
+          </div>
+          <div class="feed-item item-threat">
+            <div class="item-icon-box">📞</div>
+            <div class="item-content">
+              <h4>Flagged suspicious caller ID from fake tech support</h4>
+              <p class="meta-row"><span>🕒 1 day ago</span> <span class="action-tag">🚫 Blocked</span></p>
+            </div>
+          </div>
+          <div class="feed-item item-threat">
+            <div class="item-icon-box">👁️</div>
+            <div class="item-content">
+              <h4>Warned about emotional headline with power words</h4>
+              <p class="meta-row"><span>🕒 2 days ago</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guided Interventions Column -->
+      <div class="card feed-card">
+        <div class="feed-header">
+          <div class="feed-title">
+            <span class="feed-icon warning-text">⚡</span>
+            <h3>Guided Interventions</h3>
+          </div>
+          <span class="badge badge-success" id="val-interventions-badge">3 successful</span>
+        </div>
+        <div class="feed-list" id="list-interventions">
+          <div class="feed-item item-intervention">
+            <div class="item-icon-box check-icon">✓</div>
+            <div class="item-content">
+              <h4>Email Alert</h4>
+              <p class="item-desc">Successfully identified phishing email from fake Amazon</p>
+              <p class="meta-row"><span>🕒 3 hours ago</span></p>
+            </div>
+          </div>
+          <div class="feed-item item-intervention">
+            <div class="item-icon-box check-icon">✓</div>
+            <div class="item-content">
+              <h4>Emotional Loading</h4>
+              <p class="item-desc">Recognized manipulative language in news headline</p>
+              <p class="meta-row"><span>🕒 Yesterday</span></p>
+            </div>
+          </div>
+          <div class="feed-item item-intervention">
+            <div class="item-icon-box check-icon">✓</div>
+            <div class="item-content">
+              <h4>Source Check</h4>
+              <p class="item-desc">Spotted suspicious URL before clicking</p>
+              <p class="meta-row"><span>🕒 2 days ago</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 3: Sensitivity Controls & App Approval Queue -->
+    <section class="controls-grid">
+      <!-- Sensitivity Controls -->
+      <div class="card control-card">
+        <div class="control-header">
+          <span class="control-icon gold-text">👁️</span>
+          <h3>Content Sensitivity Controls</h3>
+        </div>
+        <p class="control-desc">Set thresholds for when media literacy challenges are triggered</p>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Politics</span>
+            <span class="slider-val gold-text">7/10</span>
+          </div>
+          <input type="range" min="1" max="10" value="7" class="aegis-slider">
+          <div class="slider-axis-labels">
+            <span>Never trigger</span>
+            <span>Always trigger</span>
+          </div>
+          <p class="slider-detail">Moderate political content triggers challenges</p>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Religion</span>
+            <span class="slider-val gold-text">8/10</span>
+          </div>
+          <input type="range" min="1" max="10" value="8" class="aegis-slider">
+          <div class="slider-axis-labels">
+            <span>Never trigger</span>
+            <span>Always trigger</span>
+          </div>
+          <p class="slider-detail">Most religious content triggers challenges</p>
+        </div>
+
+        <div class="tip-box">
+          <span class="tip-icon gold-text">💡</span>
+          <p><strong>Tip:</strong> Higher settings mean Dad will practice more critical thinking when encountering sensitive topics.</p>
+        </div>
+      </div>
+
+      <!-- App Approval Queue -->
+      <div class="card control-card">
+        <div class="control-header">
+          <span class="control-icon gold-text">📥</span>
+          <h3>App Approval Queue</h3>
+        </div>
+        <p class="control-desc">Dad is requesting permission to install these apps</p>
+
+        <div class="app-queue-list">
+          <div class="app-request-card">
+            <div class="app-meta">
+              <div class="app-icon-slot">🃏</div>
+              <div>
+                <h4>Solitaire Deluxe</h4>
+                <p class="app-cat">Games</p>
+                <p class="app-timing">🕒 10 mins ago <span class="risk-badge risk-low">LOW RISK</span></p>
+              </div>
+            </div>
+            <div class="app-actions">
+              <button class="btn btn-approve">✓ Approve</button>
+              <button class="btn btn-deny">✕ Deny</button>
+            </div>
+          </div>
+
+          <div class="app-request-card">
+            <div class="app-meta">
+              <div class="app-icon-slot">📹</div>
+              <div>
+                <h4>Video Chat Pro</h4>
+                <p class="app-cat">Communication</p>
+                <p class="app-timing">🕒 1 hour ago <span class="risk-badge risk-med">MEDIUM RISK</span></p>
+              </div>
+            </div>
+            <div class="app-actions">
+              <button class="btn btn-approve">✓ Approve</button>
+              <button class="btn btn-deny">✕ Deny</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Action Dock -->
+    <footer class="bottom-dock">
+      <div class="dock-status">
+        <span class="dock-icon gold-text">⚠️</span>
+        <div>
+          <h4>No Critical Alerts</h4>
+          <p>All systems operating normally. Emergency controls available if needed.</p>
+        </div>
+      </div>
+      <div class="dock-actions">
+        <button class="btn btn-emergency">📞 Emergency Call</button>
+        <button class="btn btn-lock" id="btn-lock-device">🔒 Lock Device</button>
+      </div>
+    </footer>
+
+    <!-- Footer Meta -->
+    <div class="system-footer-meta">
+      <p>Aegis Caregiver Portal • Real-time protection active • Last sync: Just now</p>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

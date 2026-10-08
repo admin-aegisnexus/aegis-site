@@ -1,5 +1,20 @@
 // Aegis Caregiver Portal - Authoritative Client Interface Logic
 document.addEventListener('DOMContentLoaded', () => {
+  // Ephemeral Pre-Auth Access Barrier
+  const AUTH_KEY = 'aegis_portal_session_token';
+  const EXPECTED_PASSPHRASE = 'Aegis2026!';
+
+  if (sessionStorage.getItem(AUTH_KEY) !== 'AUTHORIZED') {
+    const entry = prompt('Aegis Nexus Authorized Portal - Enter Access Key:');
+    if (entry === EXPECTED_PASSPHRASE) {
+      sessionStorage.setItem(AUTH_KEY, 'AUTHORIZED');
+    } else {
+      window.location.href = 'https://aegisnexus.ai';
+      return;
+    }
+  }
+  document.body.style.visibility = 'visible';
+
   let telemetryRecords = [];
   let activeIndex = 0;
 

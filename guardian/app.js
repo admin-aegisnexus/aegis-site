@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const streakEl = document.getElementById('val-streak-count');
-      if (streakEl && data.streak_count !== undefined) {
-        streakEl.innerText = `${data.streak_count} day streak`;
-      }
+    if (streakEl) {
+      streakEl.innerText = `[STAGED: LOCAL_PREF_DEBT]`;
+    }
 
       const completedEl = document.getElementById('val-completed-modules');
       if (completedEl && (data.completed_days !== undefined || data.completed_modules_count !== undefined)) {

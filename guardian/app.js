@@ -1,10 +1,35 @@
-// Aegis Caregiver Portal - Client Interface Logic
+// Aegis Caregiver Portal - Authoritative Client Interface Logic
 document.addEventListener('DOMContentLoaded', () => {
-  async function loadTelemetry() {
+  let telemetryRecords = [];
+  let activeIndex = 0;
+
+  async function fetchLiveTelemetry() {
     try {
-      const response = await fetch('./mock_guardian_telemetry.json');
+      const url = `${AEGIS_CONFIG.SUPABASE_URL}/rest/v1/pilot_guardian_telemetry?select=*`;
+      const response = await fetch(url, {
+        headers: {
+          'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${AEGIS_CONFIG.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-      const data = await response.json();
+      telemetryRecords = await response.json();
+      if (!telemetryRecords || telemetryRecords.length === 0) return;
+
+      // Default to Worm if present, otherwise first available record
+      const defaultIdx = telemetryRecords.findIndex(r => (r.nickname || r.callsign) === 'Worm');
+      activeIndex = defaultIdx >= 0 ? defaultIdx : 0;
+
+      renderPilotData(telemetryRecords[activeIndex]);
+      setupPilotSwitcher();
+    } catch (err) {
+      console.warn('Live telemetry fetch failed, retaining static layout fallback:', err);
+    }
+  }
+
+  function renderPilotData(data) {
+    if (!data) return;
 
       const callsignEl = document.getElementById('val-pilot-callsign');
       if (callsignEl && (data.nickname || data.callsign)) {
@@ -24,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const iqEl = document.getElementById('val-security-iq');
       if (iqEl && data.security_iq?.score !== undefined) {
         iqEl.innerText = data.security_iq.score;
+      } else if (iqEl && data.security_iq_score !== undefined) {
+      iqEl.innerText = data.security_iq_score;
       }
 
       const statusEl = document.getElementById('val-guardian-status');
@@ -40,12 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lastActiveEl && data.last_active) {
         lastActiveEl.innerText = `🕒 Last active: ${data.last_active}`;
       }
-    } catch (err) {
-      console.warn('Telemetry load failed, retaining static layout fallback:', err);
-    }
   }
 
-  loadTelemetry();
+  function setupPilotSwitcher() {
+    const callsignEl = document.getElementById('val-pilot-callsign');
+    if (!callsignEl || telemetryRecords.length <= 1) return;
+    
+    // Toggle cursor styling to indicate interactive context switching
+    callsignEl.style.cursor = 'pointer';
+    callsignEl.title = 'Click to switch active pilot';
+    callsignEl.onclick = () => {
+      activeIndex = (activeIndex + 1) % telemetryRecords.length;
+      renderPilotData(telemetryRecords[activeIndex]);
+    };
+  }
+
+  fetchLiveTelemetry();
 
   const lockBtn = document.getElementById('btn-lock-device');
   if (lockBtn) {

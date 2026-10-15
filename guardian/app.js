@@ -69,18 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
       renderPilotData(telemetryRecords[activeIndex]);
       setupPilotSwitcher();
     } catch (err) {
-    console.error('❌ Live telemetry fetch failed:', err);
-    const statusSubEl = document.querySelector('.card-status .status-subtext');
-    if (statusSubEl) {
-      statusSubEl.innerText = `⚠️ Fetch Error: ${err.message}`;
-      statusSubEl.style.color = '#ef4444';
+        console.error('❌ Live telemetry fetch failed:', err);
+        const statusSubEl = document.querySelector('.card-status .status-subtext');
+        if (statusSubEl) {
+          statusSubEl.innerText = `⚠️ Fetch Error: ${err.message}`;
+          statusSubEl.style.color = '#ef4444';
+        }
+      }
     }
-    const statusSubEl = document.querySelector('.card-status .status-subtext');
-    if (statusSubEl) {
-      statusSubEl.innerText = '⚠️ Offline Mode: Showing cached demo telemetry';
-      statusSubEl.style.color = '#ef4444';
-    }
-  }
 
   function renderPilotData(data) {
     if (!data) return;
@@ -93,8 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const streakEl = document.getElementById('val-streak-count');
   if (streakEl) {
     const streakVal = data.pilot_streak_count ?? data.streak_count ?? 0;
-    const modulesVal = data.completed_days ?? data.completed_modules_count ?? 0;
-    streakEl.innerText = `${streakVal} day streak • ${modulesVal} modules completed`;
+    streakEl.innerText = `${streakVal} day streak`;
   }
 
   const completedEl = document.getElementById('val-completed-modules');

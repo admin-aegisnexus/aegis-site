@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('❌ Live telemetry fetch failed:', err);
     const statusSubEl = document.querySelector('.card-status .status-subtext');
     if (statusSubEl) {
+      statusSubEl.innerText = `⚠️ Fetch Error: ${err.message}`;
+      statusSubEl.style.color = '#ef4444';
+    }
+    const statusSubEl = document.querySelector('.card-status .status-subtext');
+    if (statusSubEl) {
       statusSubEl.innerText = '⚠️ Offline Mode: Showing cached demo telemetry';
       statusSubEl.style.color = '#ef4444';
     }

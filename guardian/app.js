@@ -13,10 +13,39 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
   }
-  document.body.style.visibility = 'visible';
 
   let telemetryRecords = [];
   let activeIndex = 0;
+
+  let accessToken = sessionStorage.getItem('aegis_supabase_token');
+
+  async function authenticateSupabase() {
+    // For initial founder self-monitoring tier, prompt for Supabase credentials if not cached
+    if (!accessToken) {
+      const email = prompt('Aegis Caregiver Portal - Enter Authorized Email:');
+      const password = prompt('Aegis Caregiver Portal - Enter Password:');
+      if (!email || !password) return false;
+
+      try {
+        const authRes = await fetch(`${AEGIS_CONFIG.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: {
+            'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        if (!authRes.ok) throw new Error('Authentication failed');
+        const authData = await authRes.json();
+        accessToken = authData.access_token;
+        sessionStorage.setItem('aegis_supabase_token', accessToken);
+      } catch (err) {
+        alert('Supabase Auth Error: ' + err.message);
+        return false;
+      }
+    }
+    return true;
+  }
 
   async function fetchLiveTelemetry() {
     try {
@@ -24,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url, {
         headers: {
           'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${AEGIS_CONFIG.SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         }
       });
@@ -108,7 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  fetchLiveTelemetry();
+  authenticateSupabase().then(authed => {
+    if (authed) {
+      document.body.style.visibility = 'visible';
+      fetchLiveTelemetry();
+    }
+  });
 
   const lockBtn = document.getElementById('btn-lock-device');
   if (lockBtn) {

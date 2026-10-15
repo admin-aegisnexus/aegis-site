@@ -39,7 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
       renderPilotData(telemetryRecords[activeIndex]);
       setupPilotSwitcher();
     } catch (err) {
-      console.warn('Live telemetry fetch failed, retaining static layout fallback:', err);
+    console.error('❌ Live telemetry fetch failed:', err);
+    const statusSubEl = document.querySelector('.card-status .status-subtext');
+    if (statusSubEl) {
+      statusSubEl.innerText = '⚠️ Offline Mode: Showing cached demo telemetry';
+      statusSubEl.style.color = '#ef4444';
     }
   }
 
@@ -52,8 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const streakEl = document.getElementById('val-streak-count');
-    if (streakEl) {
-      streakEl.innerText = `[STAGED: LOCAL_PREF_DEBT]`;
+    if (streakEl && data.pilot_streak_count !== undefined) {
+      streakEl.innerText = `${data.pilot_streak_count} day streak`;
+    } else if (streakEl && data.streak_count !== undefined) {
+      streakEl.innerText = `${data.streak_count} day streak`;
+    } else if (streakEl) {
+      streakEl.innerText = `0 day streak`;
     }
 
       const completedEl = document.getElementById('val-completed-modules');

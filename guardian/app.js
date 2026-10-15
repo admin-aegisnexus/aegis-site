@@ -20,11 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let accessToken = sessionStorage.getItem('aegis_supabase_token');
 
   async function authenticateSupabase() {
-    // For initial founder self-monitoring tier, prompt for Supabase credentials if not cached
     if (!accessToken) {
       const email = prompt('Aegis Caregiver Portal - Enter Authorized Email:');
       const password = prompt('Aegis Caregiver Portal - Enter Password:');
-      if (!email || !password) return false;
+      if (!email || !password) {
+        return false;
+      }
 
       try {
         const authRes = await fetch(`${AEGIS_CONFIG.SUPABASE_URL}/auth/v1/token?grant_type=password`, {

@@ -55,21 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderPilotData(data) {
     if (!data) return;
 
-      const callsignEl = document.getElementById('val-pilot-callsign');
-      if (callsignEl && (data.nickname || data.callsign)) {
-        callsignEl.innerText = data.nickname || data.callsign;
-      }
+  const callsignEl = document.getElementById('val-pilot-callsign');
+  if (callsignEl && (data.nickname || data.callsign)) {
+    callsignEl.innerText = data.nickname || data.callsign;
+  }
 
-      const streakEl = document.getElementById('val-streak-count');
-    if (streakEl && data.pilot_streak_count !== undefined) {
-      streakEl.innerText = `${data.pilot_streak_count} day streak`;
-    } else if (streakEl && data.streak_count !== undefined) {
-      streakEl.innerText = `${data.streak_count} day streak`;
-    } else if (streakEl) {
-      streakEl.innerText = `0 day streak`;
-    }
+  const streakEl = document.getElementById('val-streak-count');
+  if (streakEl) {
+    const streakVal = data.pilot_streak_count ?? data.streak_count ?? 0;
+    const modulesVal = data.completed_days ?? data.completed_modules_count ?? 0;
+    streakEl.innerText = `${streakVal} day streak • ${modulesVal} modules completed`;
+  }
 
-      const completedEl = document.getElementById('val-completed-modules');
+  const completedEl = document.getElementById('val-completed-modules');
       if (completedEl && (data.completed_days !== undefined || data.completed_modules_count !== undefined)) {
         completedEl.innerText = `${data.completed_days ?? data.completed_modules_count} days completed`;
       }

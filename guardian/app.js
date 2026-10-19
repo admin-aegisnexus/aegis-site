@@ -116,7 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const lastActiveEl = document.getElementById('val-last-active');
       if (lastActiveEl && data.last_active) {
-        lastActiveEl.innerText = `🕒 Last active: ${data.last_active}`;
+      let activeText = `🕒 Last active: ${data.last_active}`;
+      if (data.vitals && data.vitals.battery) {
+        activeText += ` • 🔋 Battery: ${data.vitals.battery}%`;
+      }
+      lastActiveEl.innerText = activeText;
       }
   }
 

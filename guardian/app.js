@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       telemetryRecords = await response.json();
       if (!telemetryRecords || telemetryRecords.length === 0) return;
+      await fetchThreatAlerts();
 
       // Default to Worm if present, otherwise first available record
       const defaultIdx = telemetryRecords.findIndex(r => (r.nickname || r.callsign) === 'Worm');
@@ -76,6 +77,59 @@ document.addEventListener('DOMContentLoaded', () => {
           statusSubEl.style.color = '#ef4444';
         }
       }
+
+   async function fetchThreatAlerts() {
+     try {
+       const activePilot = telemetryRecords[activeIndex] || {};
+       const pilotToken = activePilot.tester_id || 'u_alpha_002';
+       const threatUrl = `${AEGIS_CONFIG.SUPABASE_URL}/rest/v1/sentinel_alerts?select=*&pilot_id=eq.${pilotToken}&order=created_at.desc&limit=5`;
+       
+       const resp = await fetch(threatUrl, {
+         headers: {
+           'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
+           'Authorization': `Bearer ${accessToken}`,
+           'Content-Type': 'application/json'
+         }
+       });
+       if (!resp.ok) return;
+       const alerts = await resp.json();
+       renderThreatAlerts(alerts);
+     } catch (e) {
+       console.warn("⚠️ Threat alerts stream fetch failed:", e);
+     }
+   }
+
+   function renderThreatAlerts(alerts) {
+     const container = document.getElementById('threat-container');
+     const badge = document.getElementById('threat-stream-badge');
+     if (!container) return;
+
+     const activePilot = telemetryRecords[activeIndex] || {};
+     const isDaemonActive = (activePilot.guardian_status === 'PROTECTED');
+
+     if (badge) {
+       badge.innerText = isDaemonActive ? 'ACTIVE' : 'STANDBY';
+       badge.className = isDaemonActive ? 'badge badge-success' : 'badge badge-warning';
+     }
+
+     if (!alerts || alerts.length === 0) {
+       const emptyMsg = isDaemonActive 
+         ? '🛡️ Sentinel Active • No active or historical threats detected.'
+         : '⏳ Sentinel daemon standby • No threats recorded.';
+       container.innerHTML = `<p style="color: #94a3b8; font-size: 13px; text-align: center; margin: 20px 0;">${emptyMsg}</p>`;
+       return;
+     }
+     container.innerHTML = alerts.map(a => `
+       <div style="background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+         <div>
+           <strong style="color: #f87171; font-size: 13px;">${a.threat_name || a.threat_term || 'Unknown Threat'}</strong>
+           <div style="color: #94a3b8; font-size: 11px; margin-top: 2px;">${new Date(a.created_at || a.timestamp).toLocaleString()}</div>
+         </div>
+         <span style="background: #991b1b; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold;">${a.severity || 'ALERT'}</span>
+       </div>
+     `).join('');
+   }
+
     }
 
   function renderPilotData(data) {

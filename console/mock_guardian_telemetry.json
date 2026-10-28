@@ -1,0 +1,91 @@
+{
+  "tester_id": "u_alpha_002",
+  "nickname": "Worm",
+  "tier": "FLEET",
+  "guardian_status": "PILOT_LINKED",
+  "status_subtext": "Curriculum telemetry active (Sentinel daemon pending)",
+  "last_active": "2026-10-06 15:53:05",
+  "completed_days": 150,
+  "current_curriculum_day": 151,
+  "modules_completed_today": 5,
+  "vitals": {
+    "battery": "76",
+    "signal": "LINK_ACTIVE"
+  },
+  "streak_count": 12,
+  "security_iq": {
+    "score": 94,
+    "delta_week": "+8 pts this week"
+  },
+  "today_progress": {
+    "completed": 3,
+    "total": 5,
+    "modules": ["quiz", "puzzle", "sentry"]
+  },
+  "blocked_threats": [
+    {
+      "id": "staged_001",
+      "type": "gated_preview",
+      "title": "[GATED: SENTINEL_TELEMETRY_PENDING] Inbound threat filter stream",
+      "timestamp": "Awaiting Daemon",
+      "status": "NOT_MONITORED"
+    },
+    {
+      "id": "thr_002",
+      "type": "phone",
+      "title": "Flagged suspicious caller ID from fake tech support",
+      "timestamp": "1 day ago",
+      "status": "Blocked"
+    },
+    {
+      "id": "thr_003",
+      "type": "headline",
+      "title": "Warned about emotional headline with power words",
+      "timestamp": "2 days ago",
+      "status": "Warned"
+    }
+  ],
+  "guided_interventions": [
+    {
+      "id": "staged_int_001",
+      "category": "Curriculum Sync",
+      "detail": "[STAGED] Behavioral intervention hook awaiting Sentinel L3 engine",
+      "timestamp": "Standby",
+      "outcome": "Pending"
+    },
+    {
+      "id": "int_002",
+      "category": "Emotional Loading",
+      "detail": "Recognized manipulative language in news headline",
+      "timestamp": "Yesterday",
+      "outcome": "Success"
+    },
+    {
+      "id": "int_003",
+      "category": "Source Check",
+      "detail": "Spotted suspicious URL before clicking",
+      "timestamp": "2 days ago",
+      "outcome": "Success"
+    }
+  ],
+  "content_sensitivity": {
+    "politics": 7,
+    "religion": 8
+  },
+  "app_approval_queue": [
+    {
+      "package_name": "com.aegis.placeholder",
+      "app_name": "[STAGED] MDM Package Queue",
+      "category": "System Hook",
+      "requested_at": "Queue Inactive",
+      "risk_level": "GATED"
+    },
+    {
+      "package_name": "com.videochat.pro",
+      "app_name": "Video Chat Pro",
+      "category": "Communication",
+      "requested_at": "1 hour ago",
+      "risk_level": "MEDIUM_RISK"
+    }
+  ]
+}

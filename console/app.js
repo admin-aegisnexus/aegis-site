@@ -58,6 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json'
         }
       });
+      if (response.status === 401) {
+        sessionStorage.removeItem('aegis_supabase_token');
+        accessToken = null;
+        const reauthed = await authenticateSupabase();
+        if (reauthed) return fetchLiveTelemetry();
+      }
       if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       telemetryRecords = await response.json();
       if (!telemetryRecords || telemetryRecords.length === 0) return;
@@ -105,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
      if (!container) return;
 
      const activePilot = telemetryRecords[activeIndex] || {};
-     const isDaemonActive = (activePilot.guardian_status === 'PROTECTED');
+     const state = evaluateDefensePresentation(activePilot);
+     const isDaemonActive = state.isDaemonActive;
 
      if (badge) {
        badge.innerText = isDaemonActive ? 'ACTIVE' : 'STANDBY';
@@ -131,6 +138,55 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
     }
+
+  function evaluateDefensePresentation(data) {
+    const rawStatus = (data.guardian_status || 'PILOT_LINKED').toUpperCase();
+    const deviceType = (data.device_type || 'tablet').toLowerCase();
+    const isLocked = Boolean(data.locked) || rawStatus === 'LOCKDOWN_ACTIVE';
+
+    // 1. Red: Active Threat Lockdown (Tablet Fleet/BYOD)
+    if (isLocked) {
+      return {
+        label: 'LOCKDOWN ACTIVE',
+        subtext: data.active_threat
+          ? `🚨 Active threat locked down (${data.active_threat})`
+          : '🚨 Active security lockdown — threat detected on device',
+        toneClass: 'status-red status-pulse',
+        isDaemonActive: true
+      };
+    }
+
+    // 2. Red: Monitoring / Reach-Back Interrupted (Zero grace window)
+    if (['MONITORING_DOWN', 'OFFLINE', 'PILOT_OFFLINE', 'DEGRADED_REACHBACK'].includes(rawStatus)) {
+      return {
+        label: 'MONITORING DOWN',
+        subtext: data.status_subtext || '⚠️ Protection link interrupted — reach-back unavailable',
+        toneClass: 'status-red',
+        isDaemonActive: false
+      };
+    }
+
+    // 3. Green: Sentinel Active (Verified tablet protection)
+    if (['SENTINEL_ACTIVE', 'PROTECTED'].includes(rawStatus)) {
+      return {
+        label: 'SENTINEL ACTIVE',
+        subtext: data.status_subtext || '🛡️ Active monitoring & curriculum sync verified',
+        toneClass: 'status-green',
+        isDaemonActive: true
+      };
+    }
+
+    // 4. Pilot Linked: Green for companion phones (no Sentinel expected), Amber for tablets awaiting Sentinel
+    const isPhone = deviceType === 'phone';
+    return {
+      label: 'PILOT LINKED',
+      subtext: data.status_subtext || (isPhone
+        ? '📱 Companion phone linked & curriculum sync verified'
+        : '⏳ Curriculum telemetry active (Sentinel monitoring pending)'),
+      toneClass: isPhone ? 'status-green' : 'status-amber',
+      isDaemonActive: false
+    };
+  }
 
   function renderPilotData(data) {
     if (!data) return;
@@ -158,14 +214,20 @@ document.addEventListener('DOMContentLoaded', () => {
       iqEl.innerText = data.security_iq_score;
       }
 
+      const defenseState = evaluateDefensePresentation(data);
+      const statusCardEl = document.querySelector('.card-status');
+      if (statusCardEl) {
+        statusCardEl.className = `card card-status ${defenseState.toneClass}`;
+      }
+
       const statusEl = document.getElementById('val-defense-status') || document.getElementById('val-guardian-status');
-      if (statusEl && data.guardian_status) {
-        statusEl.innerText = data.guardian_status;
+      if (statusEl) {
+        statusEl.innerText = defenseState.label;
       }
 
       const statusSubEl = document.querySelector('.card-status .status-subtext');
-      if (statusSubEl && data.status_subtext) {
-        statusSubEl.innerText = data.status_subtext;
+      if (statusSubEl) {
+        statusSubEl.innerText = defenseState.subtext;
       }
 
       const lastActiveEl = document.getElementById('val-last-active');

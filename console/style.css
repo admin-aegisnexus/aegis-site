@@ -140,6 +140,53 @@ body {
 .card-status {
   background: #064e3b;
   border: 1px solid rgba(16, 185, 129, 0.3);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.card-status.status-green {
+  background: #064e3b;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+.card-status.status-green .status-dot {
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+}
+.card-status.status-green .status-subtext {
+  color: #a7f3d0;
+}
+
+.card-status.status-amber {
+  background: #451a03;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+.card-status.status-amber .status-dot {
+  background: #fbbf24;
+  box-shadow: 0 0 10px #fbbf24;
+}
+.card-status.status-amber .status-subtext {
+  color: #fde68a;
+}
+
+.card-status.status-red {
+  background: #450a0a;
+  border-color: rgba(239, 68, 68, 0.55);
+}
+.card-status.status-red .status-dot {
+  background: #f87171;
+  box-shadow: 0 0 12px #ef4444;
+}
+.card-status.status-red .status-subtext {
+  color: #fecaca;
+}
+
+.card-status.status-pulse {
+  animation: statusCardPulse 2s infinite;
+}
+
+@keyframes statusCardPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+  70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
 .status-indicator-wrap {

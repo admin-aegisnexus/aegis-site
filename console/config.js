@@ -1,4 +1,4 @@
-// Aegis Caregiver Ecosystem - Environment Configuration
+// Aegis Nexus Console - Environment Configuration
 const AEGIS_CONFIG = {
   // Staging detection keyed off /vanguard/
   IS_STAGING: window.location.pathname.includes('/vanguard'),

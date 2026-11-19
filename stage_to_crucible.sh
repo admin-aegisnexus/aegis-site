@@ -1,7 +1,8 @@
-#!/bin/bash
-set -e
-echo "=== Aegis Local Staging Sweep (Zero-Credit) ==="
-node --check /mnt/forge_sandbox/aegis-site/guardian/app.js
-echo "[OK] JS syntax verified."
-scp -r /mnt/forge_sandbox/aegis-site/guardian/* crucible@crucible:/mnt/staging_sandbox/aegis-site/guardian/
-echo "[SUCCESS] Staged to http://crucible:8090/guardian/ (Use Ctrl+Shift+R in browser)"
+#!/usr/bin/env bash
+set -euo pipefail
+
+node --check /mnt/forge_sandbox/aegis-site/console/app.js
+ssh crucible@crucible "mkdir -p /mnt/staging_sandbox/aegis-site/console"
+scp -r /mnt/forge_sandbox/aegis-site/console/* crucible@crucible:/mnt/staging_sandbox/aegis-site/console/
+scp /mnt/forge_sandbox/aegis-site/_redirects crucible@crucible:/mnt/staging_sandbox/aegis-site/
+echo "[SUCCESS] Staged to http://crucible:8090/console/ (Use Ctrl+Shift+R in browser)"

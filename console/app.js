@@ -75,69 +75,119 @@ document.addEventListener('DOMContentLoaded', () => {
 
       renderPilotData(telemetryRecords[activeIndex]);
       setupPilotSwitcher();
+      await fetchThreatAlerts();
     } catch (err) {
-        console.error('❌ Live telemetry fetch failed:', err);
-        const statusSubEl = document.querySelector('.card-status .status-subtext');
-        if (statusSubEl) {
-          statusSubEl.innerText = `⚠️ Fetch Error: ${err.message}`;
-          statusSubEl.style.color = '#ef4444';
-        }
+      console.error('❌ Live telemetry fetch failed:', err);
+      const statusSubEl = document.querySelector('.card-status .status-subtext');
+      if (statusSubEl) {
+        statusSubEl.innerText = `⚠️ Fetch Error: ${err.message}`;
+        statusSubEl.style.color = '#ef4444';
       }
-
-   async function fetchThreatAlerts() {
-     try {
-       const activePilot = telemetryRecords[activeIndex] || {};
-       const pilotToken = activePilot.tester_id || 'u_alpha_002';
-       const threatUrl = `${AEGIS_CONFIG.SUPABASE_URL}/rest/v1/sentinel_alerts?select=*&pilot_id=eq.${pilotToken}&order=created_at.desc&limit=5`;
-       
-       const resp = await fetch(threatUrl, {
-         headers: {
-           'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
-           'Authorization': `Bearer ${accessToken}`,
-           'Content-Type': 'application/json'
-         }
-       });
-       if (!resp.ok) return;
-       const alerts = await resp.json();
-       renderThreatAlerts(alerts);
-     } catch (e) {
-       console.warn("⚠️ Threat alerts stream fetch failed:", e);
-     }
-   }
-
-   function renderThreatAlerts(alerts) {
-     const container = document.getElementById('threat-container');
-     const badge = document.getElementById('threat-stream-badge');
-     if (!container) return;
-
-     const activePilot = telemetryRecords[activeIndex] || {};
-     const state = evaluateDefensePresentation(activePilot);
-     const isDaemonActive = state.isDaemonActive;
-
-     if (badge) {
-       badge.innerText = isDaemonActive ? 'ACTIVE' : 'STANDBY';
-       badge.className = isDaemonActive ? 'badge badge-success' : 'badge badge-warning';
-     }
-
-     if (!alerts || alerts.length === 0) {
-       const emptyMsg = isDaemonActive 
-         ? '🛡️ Sentinel Active • No active or historical threats detected.'
-         : '⏳ Sentinel daemon standby • No threats recorded.';
-       container.innerHTML = `<p style="color: #94a3b8; font-size: 13px; text-align: center; margin: 20px 0;">${emptyMsg}</p>`;
-       return;
-     }
-     container.innerHTML = alerts.map(a => `
-       <div style="background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-         <div>
-           <strong style="color: #f87171; font-size: 13px;">${a.threat_name || a.threat_term || 'Unknown Threat'}</strong>
-           <div style="color: #94a3b8; font-size: 11px; margin-top: 2px;">${new Date(a.created_at || a.timestamp).toLocaleString()}</div>
-         </div>
-         <span style="background: #991b1b; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold;">${a.severity || 'ALERT'}</span>
-       </div>
-     `).join('');
-   }
-
     }
+  }
+
+  async function acknowledgeThreatAlert(alertId, btnEl) {
+    if (!alertId || !accessToken) return;
+    const originalLabel = btnEl ? btnEl.innerText : '';
+    if (btnEl) {
+      btnEl.disabled = true;
+      btnEl.innerText = 'Updating...';
+    }
+    try {
+      const patchUrl = `${AEGIS_CONFIG.SUPABASE_URL}/rest/v1/sentinel_alerts?id=eq.${encodeURIComponent(alertId)}`;
+      const resp = await fetch(patchUrl, {
+        method: 'PATCH',
+        headers: {
+          'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ status: 'acknowledged' })
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      await fetchThreatAlerts();
+    } catch (err) {
+      console.error('❌ Failed to acknowledge alert:', err);
+      if (btnEl) {
+        btnEl.disabled = false;
+        btnEl.innerText = originalLabel || 'Stand Down';
+      }
+    }
+  }
+
+  async function fetchThreatAlerts() {
+    try {
+      const activePilot = telemetryRecords[activeIndex] || {};
+      const pilotName = activePilot.nickname || '';
+      if (!pilotName) return;
+      const threatUrl = `${AEGIS_CONFIG.SUPABASE_URL}/rest/v1/sentinel_alerts?select=*&pilot_name=eq.${encodeURIComponent(pilotName)}&order=created_at.desc&limit=5`;
+
+      const resp = await fetch(threatUrl, {
+        headers: {
+          'apikey': AEGIS_CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!resp.ok) return;
+      const alerts = await resp.json();
+      renderThreatAlerts(alerts);
+    } catch (e) {
+      console.warn('⚠️ Threat alerts stream fetch failed:', e);
+    }
+  }
+
+  function renderThreatAlerts(alerts) {
+    const container = document.getElementById('threat-container');
+    const badge = document.getElementById('threat-stream-badge');
+    if (!container) return;
+
+    const activePilot = telemetryRecords[activeIndex] || {};
+    const state = evaluateDefensePresentation(activePilot);
+    const isDaemonActive = state.isDaemonActive;
+
+    if (badge) {
+      badge.innerText = isDaemonActive ? 'ACTIVE' : 'STANDBY';
+      badge.className = isDaemonActive ? 'badge badge-success' : 'badge badge-warning';
+    }
+
+    if (!alerts || alerts.length === 0) {
+      const emptyMsg = isDaemonActive
+        ? '🛡️ Sentinel Active • No active or historical threats detected.'
+        : '⏳ Sentinel client link pending • Historical log clear.';
+      container.innerHTML = `<p style="color: #94a3b8; font-size: 13px; text-align: center; margin: 20px 0;">${emptyMsg}</p>`;
+      return;
+    }
+
+    container.innerHTML = alerts.map(a => {
+      const isAck = (a.status || '').toLowerCase() === 'acknowledged';
+      const rowBg = isAck ? 'rgba(148, 163, 184, 0.08)' : 'rgba(239, 68, 68, 0.12)';
+      const borderCol = isAck ? '#64748b' : '#ef4444';
+      const titleCol = isAck ? '#cbd5e1' : '#f87171';
+      const sevBg = isAck ? '#334155' : '#991b1b';
+      const actionHtml = isAck
+        ? `<span style="color: #94a3b8; font-size: 11px; font-weight: 600;">✓ Stood Down</span>`
+        : (a.id ? `<button class="btn-ack-alert" data-alert-id="${a.id}" style="background: rgba(255,255,255,0.08); color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;">Stand Down</button>` : '');
+
+      return `
+        <div style="background: ${rowBg}; border-left: 3px solid ${borderCol}; padding: 10px 14px; margin-bottom: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+          <div>
+            <strong style="color: ${titleCol}; font-size: 13px;">${a.threat_name || a.threat_term || 'Unknown Threat'}</strong>
+            <div style="color: #94a3b8; font-size: 11px; margin-top: 2px;">${new Date(a.created_at || a.timestamp).toLocaleString()}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="background: ${sevBg}; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold;">${a.severity || 'ALERT'}</span>
+            ${actionHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.btn-ack-alert').forEach(btn => {
+      btn.addEventListener('click', () => acknowledgeThreatAlert(btn.dataset.alertId, btn));
+    });
+  }
 
   function evaluateDefensePresentation(data) {
     const rawStatus = (data.guardian_status || 'PILOT_LINKED').toUpperCase();

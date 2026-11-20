@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Resources & Guides | AegisNexus</title>
+    <style>
+        :root { --navy: #001f3f; --gold: #D4AF37; --slate: #f4f7f6; --text: #333; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); background-color: white; line-height: 1.6; }
+        header { background: var(--navy); color: var(--gold); padding: 3rem 2rem; text-align: center; border-bottom: 5px solid var(--gold); }
+        header p { color: #e2e8f0; max-width: 680px; margin: 0.75rem auto 0; font-size: 1.05rem; letter-spacing: 0.5px; }
+        .container { max-width: 1050px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 2.4rem; letter-spacing: 4px; margin: 0; }
+
+        .intro-banner { background: var(--slate); border-left: 8px solid var(--navy); border-radius: 10px; padding: 1.75rem 2rem; margin: -2rem auto 2.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .intro-banner h2 { margin-top: 0; color: var(--navy); font-size: 1.35rem; }
+
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 1.75rem; margin: 2rem 0; }
+        @media (max-width: 520px) { .guide-grid { grid-template-columns: 1fr; } }
+
+        .guide-card { border: 2px solid #e2e8f0; border-radius: 10px; padding: 1.75rem; background: #fff; display: flex; flex-direction: column; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .guide-card:hover { border-color: var(--gold); box-shadow: 0 6px 18px rgba(0, 31, 63, 0.08); }
+        .badge { display: inline-block; background: var(--navy); color: var(--gold); border: 1px solid var(--gold); padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: bold; letter-spacing: 0.5px; margin-bottom: 0.75rem; align-self: flex-start; }
+        .guide-card h3 { color: var(--navy); margin: 0 0 0.6rem; font-size: 1.3rem; border-bottom: 2px solid var(--gold); padding-bottom: 0.4rem; }
+        .guide-card p { margin: 0 0 1rem; font-size: 0.96rem; color: #444; }
+        .guide-card ul { margin: 0 0 1.4rem; padding-left: 1.25rem; font-size: 0.93rem; color: #333; }
+        .guide-card li { margin-bottom: 0.4rem; }
+
+        .btn-row { margin-top: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .btn { display: inline-block; background: var(--navy); color: var(--gold); border: 2px solid var(--gold); padding: 0.65rem 1.2rem; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+        .btn:hover { background: var(--gold); color: var(--navy); }
+        .btn-secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+        .btn-secondary:hover { background: var(--navy); color: var(--gold); }
+
+        .workshop-box { background: var(--navy); color: #fff; border-radius: 10px; padding: 2rem; margin: 3rem 0 1rem; border-bottom: 5px solid var(--gold); text-align: center; }
+        .workshop-box h2 { color: var(--gold); margin-top: 0; letter-spacing: 1px; }
+        .workshop-box p { max-width: 720px; margin: 0 auto 1.4rem; color: #e2e8f0; }
+
+        .disclaimer-box { margin-top: 2.5rem; border-top: 1px solid #ddd; padding-top: 1.25rem; color: #666; font-size: 0.85rem; }
+        footer { background: var(--navy); color: #fff; text-align: center; padding: 2rem; margin-top: 3rem; font-size: 0.9rem; }
+        .back-link { color: var(--gold); text-decoration: none; font-weight: bold; }
+
+        /* Printable Sheet Overlay */
+        .sheet-modal { display: none; position: fixed; inset: 0; background: rgba(0, 15, 35, 0.82); z-index: 9999; overflow-y: auto; padding: 2rem 1rem; }
+        .sheet-paper { background: #fff; max-width: 780px; margin: 0 auto; border-radius: 8px; padding: 2.25rem; border-top: 8px solid var(--navy); box-shadow: 0 12px 35px rgba(0,0,0,0.35); }
+        .sheet-toolbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 1rem; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+        .sheet-content h2 { color: var(--navy); margin: 0 0 0.4rem; }
+        .sheet-content h4 { color: var(--navy); border-bottom: 1px solid var(--gold); padding-bottom: 4px; margin: 1.25rem 0 0.5rem; }
+        .sheet-content ul, .sheet-content ol { padding-left: 1.35rem; }
+        .sheet-content li { margin-bottom: 0.45rem; }
+        .callout { background: var(--slate); border-left: 5px solid var(--gold); padding: 0.9rem 1.1rem; border-radius: 6px; margin: 1rem 0; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .sheet-modal, .sheet-modal * { visibility: visible; }
+            .sheet-modal { position: static; background: none; padding: 0; overflow: visible; }
+            .sheet-paper { box-shadow: none; max-width: 100%; padding: 0.5in; border-top: 6px solid #001f3f; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>COMMUNITY RESOURCES</h1>
+    <p>Free, plain-English safety guides and printable checklists for everyday digital confidence.</p>
+</header>
+
+<div class="container">
+    <section class="intro-banner">
+        <h2>Practical Protection Without the Jargon</h2>
+        <p style="margin-bottom: 0;">Whether you are helping an aging parent set up a tablet, locking down personal accounts against spam, or safely recycling an old computer, these one-page reference guides are designed to be printed and kept right where you need them. Every resource is educational and vendor-neutral.</p>
+    </section>
+
+    <div class="guide-grid">
+        <!-- Guide 1 -->
+        <div class="guide-card">
+            <span class="badge">SCAM DEFENSE</span>
+            <h3>Everyday Scam Defense & "Pause & Verify" Guide</h3>
+            <p>A pocket reference sheet showing how to spot high-pressure impersonation attempts before clicking links or sending money.</p>
+            <ul>
+                <li>The 3-step <strong>Pause & Verify</strong> habit for unexpected calls, texts, and pop-ups.</li>
+                <li>Quick breakdown of bank alerts, fake delivery texts, tech-support pop-ups, and family emergency scams.</li>
+                <li>Simple tablet and phone settings that cut down daily spam.</li>
+            </ul>
+            <div class="btn-row">
+                <button class="btn" onclick="openSheet('scam')">VIEW & PRINT GUIDE</button>
+            </div>
+        </div>
+
+        <!-- Guide 2 -->
+        <div class="guide-card">
+            <span class="badge">PRIVACY & IDENTITY</span>
+            <h3>Everyday Privacy & Digital Footprint Defense</h3>
+            <p>Four foundational steps anyone can take in under 20 minutes to reduce robocalls, data broker exposure, and identity theft risk.</p>
+            <ul>
+                <li>How to place free security freezes at <strong>Equifax, Experian, and TransUnion</strong>.</li>
+                <li>Registering numbers on the <strong>National Do Not Call Registry</strong>.</li>
+                <li>Removing exposed listings from people-search brokers and using email aliases for sign-ups.</li>
+            </ul>
+            <div class="btn-row">
+                <button class="btn" onclick="openSheet('privacy')">VIEW & PRINT GUIDE</button>
+            </div>
+        </div>
+
+        <!-- Guide 3 -->
+        <div class="guide-card">
+            <span class="badge">DEVICE & PAPER HYGIENE</span>
+            <h3>Digital Hygiene & Safe Cleanup Checklist</h3>
+            <p>Practical, low-cost ways to shred sensitive paper records, wipe old electronics before recycling, and scan documents with your phone.</p>
+            <ul>
+                <li>Secure locked-bin shredding options and seasonal community shred drives.</li>
+                <li>Hard-drive removal and residential e-waste drop-off locations on Oʻahu.</li>
+                <li>3-step mobile PDF scanning using built-in <strong>Google Drive</strong> or <strong>Apple Notes</strong> tools.</li>
+            </ul>
+            <div class="btn-row">
+                <button class="btn" onclick="openSheet('cleanup')">VIEW & PRINT GUIDE</button>
+            </div>
+        </div>
+
+        <!-- Guide 4 -->
+        <div class="guide-card">
+            <span class="badge">CONNECTIVITY SETUP</span>
+            <h3>Phone Hotspot & Tablet Connection Guide</h3>
+            <p>A step-by-step visual walkthrough for connecting a Wi-Fi tablet through a mobile phone hotspot at home—or switching to faster Wi-Fi on the go.</p>
+            <ul>
+                <li>Clear checklist for turning on a phone hotspot (including normal Wi-Fi pop-up reassurance).</li>
+                <li>Connecting a tablet in Settings and turning the hotspot off before a walk to save battery.</li>
+                <li>Visual comparison of everyday mobile hotspot mode vs. library or family Wi-Fi.</li>
+            </ul>
+            <div class="btn-row">
+                <button class="btn" onclick="openSheet('hotspot')">VIEW & PRINT GUIDE</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="workshop-box">
+        <h2>Host a Free Community Digital Defense Workshop</h2>
+        <p>Aegis Nexus offers free, 45-minute educational seminars for community centers, libraries, and neighborhood associations—covering modern scam awareness, safe device habits, and open Q&A with zero sales pitches.</p>
+        <a href="contact.html" class="btn">REQUEST A COMMUNITY WORKSHOP</a>
+    </section>
+
+    <div class="disclaimer-box">
+        <strong>Educational Notice:</strong> Aegis Nexus LLC provides these guides solely as a free community educational service. Aegis Nexus does not collect, transport, store, or destroy personal documents or computer hardware. Always verify personal data is removed before recycling or donating devices.
+    </div>
+</div>
+
+<!-- Printable Sheet Modal -->
+<div id="sheet-modal" class="sheet-modal" onclick="if(event.target===this) closeSheet()">
+    <div class="sheet-paper">
+        <div class="sheet-toolbar no-print">
+            <strong style="color: var(--navy);">Printable One-Page Reference Sheet</strong>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn" onclick="window.print()">PRINT / SAVE AS PDF</button>
+                <button class="btn btn-secondary" onclick="closeSheet()">CLOSE</button>
+            </div>
+        </div>
+        <div id="sheet-content" class="sheet-content"></div>
+    </div>
+</div>
+
+<footer>
+    © 2026 AegisNexus.ai | <a href="index.html" class="back-link">Return to Home</a> | <a href="services.html" class="back-link">Services</a> | <a href="story.html" class="back-link">Our Story</a> | <a href="contact.html" class="back-link">Contact Us</a>
+</footer>
+
+<script>
+const SHEETS = {
+    scam: `
+        <h2>Everyday Scam Defense: The "Pause & Verify" Reference Guide</h2>
+        <p style="color:#555; margin-top:0;">Provided by Aegis Nexus LLC • Free Community Educational Handout</p>
+        <div class="callout">
+            <strong>The Golden Rule:</strong> Legitimate banks, government agencies, and family members will never demand immediate payment by gift card, wire transfer, cryptocurrency, or secrecy.
+        </div>
+        <h4>1. The 3-Step "Pause & Verify" Habit</h4>
+        <ol>
+            <li><strong>Pause:</strong> Take a breath whenever a call, text, or pop-up creates panic or urgency. Hang up or close the screen.</li>
+            <li><strong>Verify Independently:</strong> Call the organization back using the phone number printed on the back of your bank card or official statement—never the number inside a suspicious message.</li>
+            <li><strong>Ask a Second Set of Eyes:</strong> Check in with a trusted family member or friend before acting on any unusual financial or account request.</li>
+        </ol>
+        <h4>2. Four Common Patterns to Watch For</h4>
+        <ul>
+            <li><strong>Fake Bank & Fraud Alerts:</strong> Texts claiming an account is locked and asking you to click a link to "confirm" your login.</li>
+            <li><strong>Delivery & Toll Texts:</strong> Unexpected messages claiming a package cannot be delivered or an unpaid road toll requires a small fee.</li>
+            <li><strong>Tech-Support Pop-Ups:</strong> Loud browser warnings claiming your tablet or computer is infected and instructing you to call a toll-free support number.</li>
+            <li><strong>Impostor / Emergency Calls:</strong> Callers claiming a relative is in trouble and needs immediate money or gift cards.</li>
+        </ul>
+        <h4>3. Quick Device Hygiene Habits</h4>
+        <ul>
+            <li>Keep automatic operating system and app updates enabled.</li>
+            <li>Silence unknown callers or use built-in carrier spam filtering.</li>
+            <li>Never install remote-access software requested by an inbound caller.</li>
+        </ul>
+    `,
+    privacy: `
+        <h2>Everyday Privacy & Digital Footprint Defense Guide</h2>
+        <p style="color:#555; margin-top:0;">Provided by Aegis Nexus LLC • Free Community Educational Handout</p>
+        <h4>1. Freeze Your Credit at All Three Bureaus (Free)</h4>
+        <p>A credit freeze prevents anyone from opening new loans or credit cards in your name, even if your personal details appeared in a data breach. Unfreezing takes minutes when you apply for credit.</p>
+        <ul>
+            <li><strong>Equifax:</strong> equifax.com/personal/credit-report-services • 1-888-298-0045</li>
+            <li><strong>Experian:</strong> experian.com/freeze • 1-888-397-3742</li>
+            <li><strong>TransUnion:</strong> transunion.com/credit-freeze • 1-800-916-8800</li>
+        </ul>
+        <h4>2. Reduce Telemarketing Calls</h4>
+        <ul>
+            <li>Register mobile and home numbers for free at <strong>donotcall.gov</strong> or by calling <strong>1-888-382-1222</strong> from the number you want to register.</li>
+        </ul>
+        <h4>3. Remove Exposed Personal Listings</h4>
+        <ul>
+            <li>Search your name and phone number periodically and request removal from people-search directories (or use Google's <em>Results About You</em> removal tool).</li>
+        </ul>
+        <h4>4. Use Aliases for Everyday Sign-Ups</h4>
+        <ul>
+            <li>Keep one primary email address strictly for banking, healthcare, and family.</li>
+            <li>Use a secondary email address (or email alias) and a secondary number such as Google Voice for retail coupons, newsletters, and one-time forms.</li>
+        </ul>
+    `,
+    cleanup: `
+        <h2>Digital Hygiene & Safe Cleanup Checklist</h2>
+        <p style="color:#555; margin-top:0;">Provided by Aegis Nexus LLC • Community Resource Guide</p>
+        <h4>1. Secure Paper Shredding</h4>
+        <ul>
+            <li><strong>Local Locked-Bin Drop-Off:</strong> The UPS Store (Mililani Shopping Center & Mililani Mauka) and Office Depot / OfficeMax offer per-pound locked-bin shredding.</li>
+            <li><strong>Free Community Shred Days:</strong> Watch for seasonal free shred events hosted by local credit unions (such as HawaiiUSA FCU and Aloha Pacific FCU) and AARP Hawaiʻi.</li>
+        </ul>
+        <h4>2. Old Computers, Tablets & Media</h4>
+        <ul>
+            <li><strong>Sanitize First:</strong> Remove the internal storage drive or perform a certified factory reset before donating or recycling any device.</li>
+            <li><strong>Optical Media:</strong> Snap old CDs/DVDs or scratch the data layer before disposal.</li>
+            <li><strong>Oʻahu Residential Drop-Offs:</strong> Best Buy (Pearlridge / Alakawa) and City & County E-Opala partner sites (including The Salvation Army Wahiawā, 435 Kilani Ave) accept eligible consumer electronics at no charge.</li>
+        </ul>
+        <h4>3. Free Mobile PDF Scanning (No Special Scanner Needed)</h4>
+        <ol>
+            <li><strong>Android (Google Drive):</strong> Open Google Drive → tap <strong>+</strong> → tap <strong>Scan</strong> → save as PDF.</li>
+            <li><strong>iPhone / iPad (Apple Notes):</strong> Open Notes → tap the <strong>Camera</strong> icon → tap <strong>Scan Documents</strong> → save.</li>
+            <li><strong>Public Library Stations:</strong> HSPLS branches offer multifunction patron stations supporting digital document workflows.</li>
+        </ol>
+        <div class="callout" style="font-size:0.88rem;">
+            <strong>Disclaimer:</strong> Aegis Nexus LLC provides this checklist for educational purposes only and does not collect, transport, store, or destroy personal records or hardware.
+        </div>
+    `,
+    hotspot: `
+        <h2>Phone Hotspot & Tablet Connection Quick Guide</h2>
+        <p style="color:#555; margin-top:0;">Provided by Aegis Nexus LLC • Everyday Connectivity Reference</p>
+        <h4>Step 1: Start Your Phone's Mobile Hotspot</h4>
+        <ol>
+            <li>Open <strong>Settings</strong> on your smartphone (or swipe down from the top of the screen for Quick Settings).</li>
+            <li>Tap <strong>Connections → Mobile Hotspot and Tethering → Mobile Hotspot</strong> and switch it <strong>On</strong>.</li>
+            <li><em>Normal Pop-Up Note:</em> If your phone asks to turn off Wi-Fi to start the hotspot, tap <strong>Turn Off / OK</strong>—your phone uses cellular data to share internet with your tablet.</li>
+        </ol>
+        <h4>Step 2: Connect Your Tablet</h4>
+        <ol>
+            <li>On your tablet, open <strong>Settings → Connections → Wi-Fi</strong>.</li>
+            <li>Select your phone's hotspot name from the list, enter the password if prompted, and tap <strong>Connect</strong> (enable <em>Auto reconnect</em> if available).</li>
+        </ol>
+        <h4>Step 3: Save Battery Before Leaving the Room</h4>
+        <ul>
+            <li>Before going for a walk or putting the tablet away, switch <strong>Mobile Hotspot Off</strong> on your phone so it does not drain battery searching for your tablet.</li>
+        </ul>
+        <div class="callout">
+            <strong>Everyday Hotspot vs. Library or Family Wi-Fi:</strong> Your phone stays connected everywhere on cellular data and bridges your tablet when you are at home. When visiting a library or relative's house, both your phone and tablet can join their local Wi-Fi directly for faster video calls and downloads.
+        </div>
+    `
+};
+
+function openSheet(key) {
+    document.getElementById('sheet-content').innerHTML = SHEETS[key] || '';
+    document.getElementById('sheet-modal').style.display = 'block';
+}
+function closeSheet() {
+    document.getElementById('sheet-modal').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

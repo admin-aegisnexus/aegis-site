@@ -1,1 +1,2 @@
 /guardian/*  /console/:splat  301!
+/resources   /resources.html  200

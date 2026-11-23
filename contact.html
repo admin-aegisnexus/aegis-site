@@ -65,6 +65,12 @@
                 nameInput.addEventListener("input", checkFormValidity);
                 emailInput.addEventListener("input", checkFormValidity);
                 messageInput.addEventListener("input", checkFormValidity);
+
+                const selectedTier = new URLSearchParams(window.location.search).get("tier");
+                if (selectedTier && !messageInput.value.trim()) {
+                    messageInput.value = "Inquiry regarding: " + selectedTier + "\n\n";
+                    checkFormValidity();
+                }
             });
         </script>
         

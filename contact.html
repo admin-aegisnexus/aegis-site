@@ -23,13 +23,13 @@
         <form name="contact" method="POST" data-netlify="true" action="/success" id="contact-form">
             <input type="hidden" name="form-name" value="contact" />
 
-            <label>Name</label>
+            <label for="name-input">Name</label>
             <input type="text" name="name" id="name-input" placeholder="Your Name" required />
     
-            <label>Email</label>
+            <label for="email-input">Email</label>
             <input type="email" name="email" placeholder="Your @email.com" required />
     
-            <label>Message</label>
+            <label for="message-input">Message</label>
             <textarea name="message" id="message-input" rows="5" placeholder="How can Aegis help?" required></textarea>
     
             <button type="submit" id="submit-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send to Aegis</button>

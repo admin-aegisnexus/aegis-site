@@ -258,10 +258,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const iqEl = document.getElementById('val-security-iq');
+      const iqTrendEl = document.getElementById('val-security-iq-trend');
       if (iqEl && data.security_iq?.score !== undefined) {
         iqEl.innerText = data.security_iq.score;
       } else if (iqEl && data.security_iq_score !== undefined) {
-      iqEl.innerText = data.security_iq_score;
+        iqEl.innerText = data.security_iq_score;
+      } else if (iqEl) {
+        iqEl.innerText = '--';
+      }
+      if (iqTrendEl) {
+        const delta = data.security_iq?.delta_week;
+        iqTrendEl.innerText = delta || 'Awaiting baseline';
+        iqTrendEl.style.color = delta && delta.startsWith('+') ? '#10b981' : (delta && delta.startsWith('-') ? '#f59e0b' : '#94a3b8');
       }
 
       const defenseState = evaluateDefensePresentation(data);
